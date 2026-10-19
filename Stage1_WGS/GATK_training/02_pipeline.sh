@@ -23,9 +23,9 @@ SAMPLES=(
 # Bash script to iterate over the samples and run fastp for paired-end reads.
 
 for SAMPLE in "${SAMPLES[@]}"; do
-# Input: ../../shared_data/${SAMPLE}_R1.fastq.gz and ../../shared_data/${SAMPLE}_R2.fastq.gz
+# Input: ../shared_data/${SAMPLE}_R1.fastq.gz and ../shared_data/${SAMPLE}_R2.fastq.gz
 # Output: ../../GATK_trimmed/${SAMPLE}_R1.fastq.gz and ../../GATK_trimmed/${SAMPLE}_R2.fastq.gz
-# Generate an HTML report for each sample in qc_reads/
+# Generate an HTML report for each sample in GATK_trimmed/
          fastp \
                   -i "../shared_data/${SAMPLE}_R1.fastq.gz" \
                   -I "../shared_data/${SAMPLE}_R2.fastq.gz" \
@@ -36,41 +36,43 @@ for SAMPLE in "${SAMPLES[@]}"; do
 done
 
 # 3. Alignment.
-# Aim: Align reads against the reference genome (or genome part).
+# Aim: Align reads against the reference genome (or genome part) to recreate a DNA sequence.
 
 # Create `map` directory for alignment output files.
 mkdir -p map
 
-# Alignment,.sam files compressing and saving output file in prepared directory in one command.
+# Alignment, conversion of SAM to BAM and saving the output in one command.
 bwa mem -R '@RG\tID:NA12878\tSM:NA12878\tPL:ILLUMINA' /tmp/ref/chr7.fa GATK_trimmed/NA12878_R1.fastq.gz GATK_trimmed/NA12878_R2.fastq.gz | samtools view -b -o map/NA12878_aligned.bam
 
 # Check created .bam files.
 samtools view NA12878_aligned.bam | head -n 5
 
 # 4. Sorting and Marking Duplicates.
+# Aim: sort duplicates that left from PCR and mark them for further proper analysis. Allows to avoid false copy number variation analysis.
+
 # Create `sorted` and `marked` directories for sorted and marked output.
 mkdir -p sorted 
 mkdir -p marked
 
 # Sorting reads and saving output file in prepared directory.
-gatk SortSam -I map/NA12878_aligned.bam -O sorted/NA12878_sorted.bam
+gatk SortSam -I map/NA12878_aligned.bam -O sorted/NA12878_sorted.bam -SORT_ORDER coordinate
 
 # Marking duplicates and save the output files in prepared directories.
 gatk MarkDuplicates -I sorted/NA12878_sorted.bam -O marked/NA12878_marked.bam -M marked/NA12878_metrics.txt
-# Indexing duplicates.
+# Index the duplicate-marked BAM.
 gatk BuildBamIndex -I marked/NA12878_marked.bam
 
 # 5. BQSR (Base Quality Score Recalibration).
-# Corrects systematic errors in base quality scores, using known variant sites
+# Corrects systematic errors in base quality scores, using known variant sites.
 
 # Create `BQSR` directory for output files.
 mkdir -p BQSR
 
 # Prepare recalibration table with modeled errors.
-gatk BaseRecalibrator -I marked/NA12878_marked.bam -R /tmp/ref/chr7.fa
+gatk BaseRecalibrator -I marked/NA12878_marked.bam -R /tmp/ref/chr7.fa --known-sites /tmp/ref/known_indels_chr7.vcf.gz -O BQSR/NA12878_recal.table
 
 # BAM file recalibration using prepared table with modeled errors. 
-gatk ApplyBQSR -I marked/NA12878_marked.bam -R /tmp/ref/chr7.fa
+gatk ApplyBQSR -I marked/NA12878_marked.bam -R /tmp/ref/chr7.fa --bqsr-recal-file BQSR/NA12878_recal.table -O BQSR/NA12878_recal.bam
 
 # 6. Variant Calling.
 # Search variants in the aligned reads.
@@ -79,7 +81,7 @@ gatk ApplyBQSR -I marked/NA12878_marked.bam -R /tmp/ref/chr7.fa
 mkdir -p VCF
 
 # Call recalibrated reads for variants based on reference genome data.
-gatk HaplotypeCaller -I BQSR/NA12878_recal.bam -R /tmp/ref/chr7.fa
+gatk HaplotypeCaller -I BQSR/NA12878_recal.bam -R /tmp/ref/chr7.fa -O VCF/NA12878.g.vcf.gz -ERC GVCF -L chr7:117400000-117750000
 
 # 7. Genotyping.
 # Creating file for further analysis in Variant Effect Predictor (VEP).
@@ -93,7 +95,7 @@ zcat NA12878.vcf.gz | grep -v "^#" | wc -l
 # Look for first lines of the variant list.
 zcat NA12878.vcf.gz | grep -v "^#" | head -n 5 | cut -f 1-6,10
 
-# Look on the variants of the region of interest.
+# Inspect the suspicious protein-changing calls flagged by VEP.
 zcat NA12878.vcf.gz | grep -E "117548682|117548786" | cut -f 1-6,10 
 
 # 8. Filtering.
@@ -108,7 +110,9 @@ gatk VariantFiltration \
     --filter-name "FS60"   --filter-expression "FS > 60.0" \
     --filter-name "MQ40"   --filter-expression "MQ < 40.0"
 
-
+# 9. Annotation. 
+# NA12878.pass.vcf.gz was annotated with Ensembl VEP (web interface, GRCh38, GENCODE 50). 
+# See README.
 
 
 
