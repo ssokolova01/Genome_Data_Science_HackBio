@@ -45,7 +45,7 @@ mkdir -p map
 bwa mem -R '@RG\tID:NA12878\tSM:NA12878\tPL:ILLUMINA' /tmp/ref/chr7.fa GATK_trimmed/NA12878_R1.fastq.gz GATK_trimmed/NA12878_R2.fastq.gz | samtools view -b -o map/NA12878_aligned.bam
 
 # Check created .bam files.
-samtools view NA12878_aligned.bam | head -n 5
+samtools view map/NA12878_aligned.bam | head -n 5
 
 # 4. Sorting and Marking Duplicates.
 # Aim: sort reads by genome position, then mark PCR/optical duplicates so they do not count as independent evidence for variants.
