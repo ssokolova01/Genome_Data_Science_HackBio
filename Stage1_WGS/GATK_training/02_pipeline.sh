@@ -47,7 +47,7 @@ bwa mem -R '@RG\tID:NA12878\tSM:NA12878\tPL:ILLUMINA' /tmp/ref/chr7.fa GATK_trim
 # Check created .bam files.
 samtools view NA12878_aligned.bam | head -n 5
 
-# 4. Sorting and MArking Duplicates.
+# 4. Sorting and Marking Duplicates.
 # Create `sorted` and `marked` directories for sorted and marked output.
 mkdir -p sorted 
 mkdir -p marked
