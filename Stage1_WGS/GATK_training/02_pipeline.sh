@@ -4,7 +4,7 @@
 # Create `qc` directory for QC output files.
 mkdir -p qc
 # QC analysis for both reads in one command.
-fastqc ~/Documents/GATK_training/shared_data/NA12878_R1.fastq.gz ~/Documents/GATK_training/shared_data/NA12878_R2.fastq.gz -o qc
+fastqc ~/Documents/shared_data/NA12878_R1.fastq.gz ~/Documents/shared_data/NA12878_R2.fastq.gz -o qc/GATK_training/
 
 # 2. Trimming.
 # Create `GATK_trimmed` directory for trimming output files.
