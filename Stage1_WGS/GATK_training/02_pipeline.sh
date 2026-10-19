@@ -24,7 +24,7 @@ SAMPLES=(
 
 for SAMPLE in "${SAMPLES[@]}"; do
 # Input: ../shared_data/${SAMPLE}_R1.fastq.gz and ../shared_data/${SAMPLE}_R2.fastq.gz
-# Output: ../../GATK_trimmed/${SAMPLE}_R1.fastq.gz and ../../GATK_trimmed/${SAMPLE}_R2.fastq.gz
+# Output: GATK_trimmed/${SAMPLE}_R1.fastq.gz and GATK_trimmed/${SAMPLE}_R2.fastq.gz
 # Generate an HTML report for each sample in GATK_trimmed/
          fastp \
                   -i "../shared_data/${SAMPLE}_R1.fastq.gz" \
@@ -90,16 +90,16 @@ gatk HaplotypeCaller -I BQSR/NA12878_recal.bam -R /tmp/ref/chr7.fa -O VCF/NA1287
 gatk GenotypeGVCFs -R /tmp/ref/chr7.fa -V VCF/NA12878.g.vcf.gz -O VCF/NA12878.vcf.gz -L chr7:117400000-117750000
 
 # Count the variants called (data lines only, header removed).
-zcat NA12878.vcf.gz | grep -v "^#" | wc -l
+zcat VCF/NA12878.vcf.gz | grep -v "^#" | wc -l
 
 # Show the first 5 variants: CHROM, POS, ID, REF, ALT, QUAL and the genotype column.
-zcat NA12878.vcf.gz | grep -v "^#" | head -n 5 | cut -f 1-6,10
+zcat VCF/NA12878.vcf.gz | grep -v "^#" | head -n 5 | cut -f 1-6,10
 
 # Inspect the three clustered protein-changing calls flagged by VEP (later identified as artefacts).
-zcat NA12878.vcf.gz | grep -E "117548682|117548786" | cut -f 1-6,10 
+zcat VCF/NA12878.vcf.gz | grep -E "117548682|117548786" | cut -f 1-6,10 
 
 # 8. Filtering.
-# Aim: Filter reads to exclude false positive variants.
+# Aim: Filter variants to exclude false positives.
 
 # Apply GATK's standard filters: depth quality (QD), reads quality confidence (QUAL), strand bias, or Fisher Strand (FS), mapping quality (MQ).
 gatk VariantFiltration \
@@ -119,7 +119,7 @@ bcftools filter -s LowAB -m+ -e 'FMT/AD[0:1] / FMT/DP < 0.2' VCF/NA12878.filtere
 bcftools view -f PASS VCF/NA12878.filtered_ab.vcf.gz -Oz -o VCF/NA12878.pass.vcf.gz
 
 # 9. Annotation. 
-# Aim: Annotate the analysed sequence with known genes.
+# Aim: Annotate variants with their predicted effect on genes and proteins.
 
 # NA12878.pass.vcf.gz was annotated with Ensembl VEP (web interface, GRCh38, GENCODE 50). 
 # See README.
