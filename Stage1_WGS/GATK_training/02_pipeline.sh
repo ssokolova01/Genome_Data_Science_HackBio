@@ -1,12 +1,17 @@
 #!/bin/bash
 
 # 1. Quality Control (QC).
+# Aim: Analyse the quality of the reads for base reliability and adapters content.
+
 # Create `qc` directory for QC output files.
 mkdir -p qc
+
 # QC analysis for both reads in one command.
-fastqc ~/Documents/GATK_training/shared_data/NA12878_R1.fastq.gz ~/Documents/GATK_training/shared_data/NA12878_R2.fastq.gz -o qc
+fastqc ~/Documents/shared_data/NA12878_R1.fastq.gz ~/Documents/shared_data/NA12878_R2.fastq.gz -o qc/GATK_training/
 
 # 2. Trimming.
+# Aim: Trim low-quality regions and adapters (if any). Here represents more as a training step, because data was treated repeatedly.
+
 # Create `GATK_trimmed` directory for trimming output files.
 mkdir -p GATK_trimmed
 
@@ -31,6 +36,8 @@ for SAMPLE in "${SAMPLES[@]}"; do
 done
 
 # 3. Alignment.
+# Aim: Align reads against the reference genome (or genome part).
+
 # Create `map` directory for alignment output files.
 mkdir -p map
 
