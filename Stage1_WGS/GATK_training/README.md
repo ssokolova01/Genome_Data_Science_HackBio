@@ -1,6 +1,6 @@
 # Variant Detection with GATK (Genome Analysis Toolkit) pipeline. #
 
-## Analysis of a genome sequencing data issued from WGS and truncated for a more technically manageable data.
+## Analysis of a genome sequencing data issued from WGS and truncated for a more technically manageable data with the aim to identify possible pathological variants in an individual.
 
 ### Files required for analysis:
 Human Reference Genome (/data/ref/Homo_sapiens_assembly38.fasta)
