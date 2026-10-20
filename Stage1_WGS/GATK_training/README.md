@@ -20,5 +20,14 @@
 
 ```
 Genome_Data_Science_HackBio/
-|--- README.md
-|---
+|--- Stage1_WGS
+        |--- GATK_training
+                  |--- data/
+                  |--- images/
+                  |--- results/
+                  |--- 00_setup_references.sh
+                  |--- 01_get_data.sh
+                  |--- 02_pipeline.sh
+                  |--- .gitignore
+```
+
