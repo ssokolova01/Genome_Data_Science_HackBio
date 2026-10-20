@@ -114,7 +114,7 @@ gatk GenotypeGVCFs
 
 * ***Filtering:***
 
-
+gatk VariantFiltration
 
 * ***Annotation:***
 
