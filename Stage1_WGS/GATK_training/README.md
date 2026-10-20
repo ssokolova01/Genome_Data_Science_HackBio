@@ -56,13 +56,13 @@ For technical reasons (end of access to initial files and work from the personal
 
 Scripts were run from a working directory in Google Cloud Shell; large files were kept outside the repository.
 
-### *1. Setup reference data for analysis.
+### 1. Setup reference data for analysis.
 
 * Find an open source database with human sequenced data.
 * Truncate and download files with reference genome data.
 * Download files with index data for alignment and annotation steps.
 
-### *2. Setup sample data for analysis. 
+### 2. Setup sample data for analysis. 
 
 * Download family file and record the sample of interest (only child was analysed).
 * Find the index file required for analysis.
@@ -71,7 +71,7 @@ Scripts were run from a working directory in Google Cloud Shell; large files wer
 * Reads were converted to FASTQ with samtools fastq (equivalent to GATK SamToFastq).
 * Pair-end reads were used for analysis, so there were two analysed sample files.
 
-### *3. WGS data analysis with GATK framework.
+### 3. WGS data analysis with GATK framework.
 
 * ***Quality Control:*** 
 
