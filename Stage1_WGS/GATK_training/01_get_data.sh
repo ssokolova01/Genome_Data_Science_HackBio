@@ -3,11 +3,12 @@
 # Get the training sample: NA12878 (1000 Genomes high-coverage, 30X WGS, GRCh38).
 # The course dataset was no longer available. 
 # So, reads from the CFTR region were extracted from a public 1000 Genomes CRAM file.
-# This file were converted back to FASTQ to start the pipeline from raw reads.
+# These reads were converted back to FASTQ to start the pipeline from raw reads.
 # Requires: 00_setup_references.sh (the chr7 reference is needed to decode the CRAM).
 
-# CFTR (GRCh38): chr7:117,480,025-117,668,665, extended by ~80 kb on each side.
+# Address of the 1000 Genomes high-coverage data folder.
 FTP=http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/1000G_2504_high_coverage
+# Region to extract: CFTR (GRCh38: chr7:117,480,025-117,668,665), extended by ~80 kb on each side.
 REGION=chr7:117400000-117750000
 
 # Create a directory where to keep extracted for analysis samples' data.
@@ -20,6 +21,7 @@ wget $FTP/1000G_2504_high_coverage.sequence.index
 wget $FTP/1000G_698_related_high_coverage.sequence.index
 
 # 2. Record the chosen sample (NA12878: female, CEU; father NA12891, mother NA12892).
+# Chosen as the best-characterised benchmark genome (Genome in a Bottle reference sample).
 grep "NA12878" 20130606_g1k_3202_samples_ped_population.txt > training_sample.txt
 
 # 3. Find the address of NA12878's CRAM file in the index files.
