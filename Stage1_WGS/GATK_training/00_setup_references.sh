@@ -5,6 +5,7 @@
 # Only chr7 is used because the analysed reads come from the CFTR region (7q31.2).
 # Files are stored in /tmp/ref (large temporary disk in Google Cloud Shell).
 
+# 
 BROAD=https://storage.googleapis.com/gcp-public-data--broad-references/hg38/v0
 mkdir -p /tmp/ref
 
