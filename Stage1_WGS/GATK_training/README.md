@@ -107,16 +107,20 @@ Then, `gatk ApplyBQSR` tool treated the reads based on that table and saved the 
 * ***Variant Calling:***
 
 File issued from the BQSR step was called for variants using `gatk HaplotypeCaller` tool. 
+Recalibrated reads were called for variants based on the reference genome.
 
 * ***Genotyping:***
 
-gatk GenotypeGVCFs
+Using `gatk GenotypeGVCFs`, the final VCF file was obtained. 
+The VCF file contains characteristics of all variants issued from analysis of the sample reads.
+Based on these characteristics, variants can be filtered for the final annotation step.
 
 * ***Filtering:***
 
-gatk VariantFiltration
-bcftools filter
-
+Three tools were used for variant filtration.
+`gatk VariantFiltration` set thresholds for parameters 
+`bcftools filter`
+`bcftools view` 
 
 * ***Annotation:***
 
