@@ -118,8 +118,8 @@ Based on these characteristics, variants can be filtered for the final annotatio
 * ***Filtering:***
 
 Three tools were used for variant filtration.
-`gatk VariantFiltration` set thresholds for parameters 
-`bcftools filter`
+`gatk VariantFiltration` set thresholds for parameters to filter reads with the highest depth, read quality confidence, lowest strand bias (paired-end sample) and the highest mapping quality.
+`bcftools filter` 
 `bcftools view` 
 
 * ***Annotation:***
