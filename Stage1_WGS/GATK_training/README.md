@@ -110,8 +110,10 @@ File issued from the BQSR step was called for variants using `gatk HaplotypeCall
 
 * ***Genotyping:***
 
+gatk GenotypeGVCFs
 
 * ***Filtering:***
+
 
 
 * ***Annotation:***
