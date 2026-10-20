@@ -25,7 +25,8 @@ grep "NA12878" 20130606_g1k_3202_samples_ped_population.txt > training_sample.tx
 grep "NA12878" *.sequence.index | cut -f 1 | cut -d ':' -f 2- > cram_urls.txt
 
 # 4. Extract only the CFTR region from the remote CRAM and convert it to BAM.
-#    -T: reference used to decode the CRAM (CRAM stores only differences from the reference).
+# -T: reference used to decode the CRAM (CRAM stores only differences from the reference).
+# The CRAM address uses https://, while cram_urls.txt contains the ftp:// version. I used https:// because samtools reads it more reliably.
 CRAM=https://ftp.sra.ebi.ac.uk/vol1/run/ERR323/ERR3239334/NA12878.final.cram
 samtools view -b -T /tmp/ref/chr7.fa -o NA12878_CFTR.bam $CRAM $REGION
 
