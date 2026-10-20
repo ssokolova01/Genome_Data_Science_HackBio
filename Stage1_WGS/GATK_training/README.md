@@ -119,8 +119,8 @@ Based on these characteristics, variants can be filtered for the final annotatio
 
 Three tools were used for variant filtration.
 `gatk VariantFiltration` set thresholds for parameters to filter reads with the highest depth, read quality confidence, lowest strand bias (paired-end sample) and the highest mapping quality.
-`bcftools filter` 
-`bcftools view` 
+`bcftools filter` filter the reads based on the thresholds established in `gatk VariantFiltration` tool.
+`bcftools view` creates a file which contains the final input for VEP.
 
 * ***Annotation:***
 
