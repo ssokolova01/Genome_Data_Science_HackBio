@@ -115,6 +115,8 @@ gatk GenotypeGVCFs
 * ***Filtering:***
 
 gatk VariantFiltration
+bcftools filter
+
 
 * ***Annotation:***
 
