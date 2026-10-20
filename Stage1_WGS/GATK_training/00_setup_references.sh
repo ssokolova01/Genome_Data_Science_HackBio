@@ -5,7 +5,7 @@
 # Only chr7 is used because the analysed reads come from the CFTR region (7q31.2).
 # Files are stored in /tmp/ref (large temporary disk in Google Cloud Shell).
 
-# Address of the Broad Institute bucket for reference genome.
+# Address of the Broad Institute bucket with the hg38 reference files.
 BROAD=https://storage.googleapis.com/gcp-public-data--broad-references/hg38/v0
 
 # Create a temporary folder in Google Cloud disk for large files with reference data.
@@ -15,13 +15,13 @@ mkdir -p /tmp/ref
 # samtools uses the remote .fai index to download only chr7 (~154 MB), not the whole 3 GB genome.
 samtools faidx $BROAD/Homo_sapiens_assembly38.fasta chr7 > /tmp/ref/chr7.fa
 
-# 2. Set the FASTA index (.fai): needed by samtools and GATK to access positions in the reference.
+# 2. Create the FASTA index (.fai): needed by samtools and GATK to access positions in the reference.
 samtools faidx /tmp/ref/chr7.fa
 
-# 3. Set the BWA index (.amb, .ann, .bwt, .pac, .sa): needed by bwa mem for alignment.
+# 3. Create the BWA index (.amb, .ann, .bwt, .pac, .sa): needed by bwa mem for alignment.
 bwa index /tmp/ref/chr7.fa
 
-# 4. Set the sequence dictionary (.dict): needed by every GATK tool that reads the reference.
+# 4. Create the sequence dictionary (.dict): needed by every GATK tool that reads the reference.
 gatk CreateSequenceDictionary -R /tmp/ref/chr7.fa
 
 # 5. Extract known indels for BQSR.
