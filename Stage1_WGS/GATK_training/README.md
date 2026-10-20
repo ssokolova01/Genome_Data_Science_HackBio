@@ -88,17 +88,24 @@ Generally, this step could be skipped because of the previous data processing (b
 
 * ***Alignment:***
 
+Alignment step was performed in one command using bwa mem which includes repairing, indexing, alignment and .sam file compression to .bam.
 For alignment step, chromosome 7 CFTR region was extracted from ChGR38 reference genome.
 
 * ***Sorting and Marking Duplicates:***
 
-Using SortSam tool, possible dulplicates were sorted based on the genomic coordinates established at the alignment step.
-Using MarkDuplicates tool, duplicates were marked and put in the separate folder.
+From this step, GATK workflow was applied.
+Using gatk SortSam tool, possible dulplicates were sorted and indexed based on the genomic coordinates indexing at the alignment step.
+Using gatk MarkDuplicates tool, duplicates were marked and put in a separate folder, then indexed using BuildBamIndex tool.
 
 * ***BQSR:***
 
+Before variant calling base quality score recalibration was performed. 
+The quality of bases was now evaluated based in the alignment results, not on the technical accuracy.
+First, gatk BaseRecalibrator tool created a table of mismatches.
+Then, gatk ApplyBQSR tool treated the reads based on that table and saved the matching aligned regions.
 
 * ***Variant Calling:***
+
 
 
 * ***Genotyping:***
