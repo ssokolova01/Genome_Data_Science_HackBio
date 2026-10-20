@@ -122,6 +122,9 @@ Three tools were used for variant filtration.
 `bcftools filter` filter the reads based on the thresholds established in `gatk VariantFiltration` tool.
 `bcftools view` creates a file which contains the final input for VEP.
 
+VEP before filtering: https://www.ensembl.org/tools/vep/submissions/4dZmHIGVOuqMBc
+VEP after filtering: https://www.ensembl.org/tools/vep/submissions/1jldYJcUJqntA1
+
 * ***Annotation:***
 
 At this stage no code was used.
