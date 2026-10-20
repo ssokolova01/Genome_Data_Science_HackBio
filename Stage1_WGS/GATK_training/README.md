@@ -73,37 +73,42 @@ Scripts were run from a working directory in Google Cloud Shell; large files wer
 
 ### *3. WGS data analysis with GATK framework.
 
-* Quality Control: 
+* ***Quality Control:*** 
+
 This step was performed as a required part of NGS data analysis. 
 Both reads had warning flags for "Per tile sequencing quality" and for "Per sequence GC content" modules. 
 These warning flags can be explained by truncation during the sample preparation stage.
 There were no fail flags for any module. 
 Phred score for all bases was at the level of 30 because the data underwent trimming in the previous analysis.
 
-* Trimming:
+* ***Trimming:***
+
 This step was performed as a required part of the NGS data analysis.
 Generally, this step could be skipped because of the previous data processing (bases already have required Phred score and there are no adapters).
 
-* Alignment:
+* ***Alignment:***
+
 For alignment step, chromosome 7 CFTR region was extracted from ChGR38 reference genome.
 
-* Sorting and Marking Duplicates:
+* ***Sorting and Marking Duplicates:***
+
 Using SortSam tool, possible dulplicates were sorted based on the genomic coordinates established at the alignment step.
 Using MarkDuplicates tool, duplicates were marked and put in the separate folder.
 
-* BQSR
+* ***BQSR:***
 
 
-* Variant Calling
+* ***Variant Calling:***
 
 
-* Genotyping
+* ***Genotyping:***
 
 
-* Filtering
+* ***Filtering:***
 
 
-* Annotation
+* ***Annotation:***
+
 At this stage no code was used.
 The annotation stage was performed using Ensembl Variant Effect Predictor (VEP) online tool. 
 Before filtering, two pathological variants were discovered in VEP. 
