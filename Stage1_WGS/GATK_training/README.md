@@ -106,7 +106,7 @@ Then, `gatk ApplyBQSR` tool treated the reads based on that table and saved the 
 
 * ***Variant Calling:***
 
-
+File issued from the BQSR step was called for variants using `gatk HaplotypeCaller` tool. 
 
 * ***Genotyping:***
 
