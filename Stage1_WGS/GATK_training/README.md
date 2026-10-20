@@ -2,9 +2,9 @@
 
 ## Objective: Analysis of a genome sequencing data issued from WGS and truncated for a more technically manageable data with the aim to identify possible pathological variants in an individual.
 
-> **Dataset: 1000 Genomes Database, Broad Institute**
-
 **Created as part of the HackBio internship Genome Data Science (Fundamentals)**
+
+> **Dataset: 1000 Genomes Database, Broad Institute**
 
 ### Files required for analysis:
 
