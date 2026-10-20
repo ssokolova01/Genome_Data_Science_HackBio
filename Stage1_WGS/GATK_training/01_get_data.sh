@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Get the training sample: NA12878 (1000 Genomes high-coverage, 30X WGS, GRCh38).
-# The course dataset was no longer available, so reads from the CFTR region were
-# extracted from a public 1000 Genomes CRAM file and converted back to FASTQ,
-# to start the pipeline from raw reads.
+# The course dataset was no longer available. 
+# So, reads from the CFTR region were extracted from a public 1000 Genomes CRAM file.
+# This file were converted back to FASTQ to start the pipeline from raw reads.
 # Requires: 00_setup_references.sh (the chr7 reference is needed to decode the CRAM).
 
 FTP=http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/1000G_2504_high_coverage
