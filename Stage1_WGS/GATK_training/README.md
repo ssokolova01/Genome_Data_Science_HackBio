@@ -110,7 +110,7 @@ From this step, GATK framework was applied.
 
 `gatk SortSam` sorted reads by genomic coordinate. 
 
-`gatk MarkDuplicates` flagged PCR and optical duplicates (10.8% of read pairs) so they are not counted as independent evidence.
+`gatk MarkDuplicates` flagged PCR and flagged duplicates (10.8% of read pairs, including 817 optical duplicate pairs) so they are not counted as independent evidence.
 
 `BuildBamIndex` indexed the result.
 
