@@ -81,44 +81,59 @@ Scripts were run from a working directory in Google Cloud Shell; large files wer
 * ***Quality Control:*** 
 
 This step was performed as a required part of NGS data analysis using `fastqc` tool. 
+
 Both reads had warning flags for "Per tile sequencing quality" and for "Per sequence GC content" modules. 
+
 GC warning was expected, because the reads come from a single 350 kb region rather than the whole genome.
+
 These warning flags can be explained by truncation during the sample preparation stage.
+
 There were no fail flags for any module. 
+
 All base qualities appear as Phred 30 because the source CRAM files store binned quality scores, which makes the per-base quality plot uninformative.
 
 * ***Trimming:***
 
 Trimming was included as an additional QC step. Bases already have required Phred score and no adapters.
+
 GATK Best Practices consider it optional, since BWA-MEM soft-clips residual adapter sequence.
 
 * ***Alignment:***
 
 Reads were aligned with `bwa mem` to GRCh38 chromosome 7, adding read groups (`-R`) required by GATK.
+
 The output was converted to BAM with `samtools view -b` in the same command.
 
 * ***Sorting and Marking Duplicates:***
 
 From this step, GATK framework was applied.
+
 `gatk SortSam` sorted reads by genomic coordinate. 
+
 `gatk MarkDuplicates` flagged PCR and optical duplicates (10.8% of read pairs) so they are not counted as independent evidence.
+
 `BuildBamIndex` indexed the result.
 
 * ***BQSR:***
 
 `BaseRecalibrator` modelled systematic errors in base quality scores using known indel sites. This allows to avoid mistaking between real variation and errors. 
+
 `ApplyBQSR` applied this model to recalibrate the base qualities.
 
 * ***Variant Calling:***
 
 File issued from the BQSR step was called for variants using `gatk HaplotypeCaller` tool. 
+
 Recalibrated reads were called for variants based on the reference genome.
+
 `HaplotypeCaller` was run in GVCF mode (`-ERC GVCF`), restricted to the CFTR region with `-L` (without it, the run failed with an out-of-memory error).
 
 * ***Genotyping:***
 
 Using `gatk GenotypeGVCFs`, the final VCF file was obtained. 
+
 The VCF file contains characteristics of all variants issued from analysis of the sample reads.
+
 Based on these characteristics, variants can be filtered for the final annotation step.
 
 ***Observing called variants after genotyping and before filtering in VEP:***
@@ -136,8 +151,11 @@ Pathologic predicted molecular consequences are present:
 * ***Filtering:***
 
 Three tools were used for variant filtration.
+
 `gatk VariantFiltration` flagged variants failing GATK’s standard hard filters (QD < 2, QUAL < 30, FS > 60, MQ < 40). 
+
 These let two low-quality calls pass, so `bcftools filter` added an allele-balance filter (alternate reads < 20% of depth). 
+
 `bcftools view` kept only PASS variants: 64 of ~100.
 
 ***Observing recalibrated reads in IGV tool:***
@@ -179,17 +197,25 @@ No pathogenic predicted molecular consequences are identified:
 * ***Annotation:***
 
 At this stage no code was used.
+
 The annotation stage was performed using Ensembl Variant Effect Predictor (VEP) online tool. 
+
 Before filtering, the list of variants included 68 positions. 
+
 Three clustered calls were found within 15 bp, supported by the same four reads. 
+
 chr7    117548682       .       C       A       59.64   QD2
 chr7    117548786       .       AGTT    A       79.60   PASS
 chr7    117548796       .       G       T       79.64   PASS
+
 VEP classified two as protein-altering (missense, in-frame deletion) and one as synonymous. 
+
 After filtering, 64 variants left, with no pathogenic variants detected.
+
 chr7    117548682       .       C       A       59.64   QD2;LowAB
 chr7    117548786       .       AGTT    A       79.6    LowAB
 chr7    117548796       .       G       T       79.64   LowAB
+
 The pathogenic variants discovered before filtering are more likely artefacts left after sample data preparation.
 
 
