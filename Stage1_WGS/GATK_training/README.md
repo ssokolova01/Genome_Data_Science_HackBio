@@ -107,7 +107,7 @@ The quality of bases was now evaluated based in the alignment results, not on th
 First, `gatk BaseRecalibrator` tool created a table of mismatches.
 Then, `gatk ApplyBQSR` tool treated the reads based on that table and saved the matching aligned regions.
 
-***Observing recalibrated reads in IGV:***
+***Observing recalibrated reads in IGV tool:***
 
 *files:* BQSR/NA12878_recal.bam, BQSR/NA12878_recal.bai
 
@@ -124,7 +124,7 @@ Aligned recalibrated reads with variants:
 File issued from the BQSR step was called for variants using `gatk HaplotypeCaller` tool. 
 Recalibrated reads were called for variants based on the reference genome.
 
-***Observing recalibrated reads with variant calls in IGV:***
+***Observing recalibrated reads with variant calls in IGV tool:***
 
 *files:* BQSR/NA12878_recal.bam, BQSR/NA12878_recal.bai, VCF/NA12878.vcf.gz, VCF/NA12878.vcf.gz.tbi
 
@@ -142,7 +142,7 @@ Using `gatk GenotypeGVCFs`, the final VCF file was obtained.
 The VCF file contains characteristics of all variants issued from analysis of the sample reads.
 Based on these characteristics, variants can be filtered for the final annotation step.
 
-VCF file analysis in VEP before filtering:
+***Observing called variants after genotyping and before filtering in VEP:***
 
 <img src="images/panel_2b_scatterplot.png" width="600">
 
@@ -153,8 +153,9 @@ Three tools were used for variant filtration.
 `bcftools filter` filter the reads based on the thresholds established in `gatk VariantFiltration` tool.
 `bcftools view` creates a file which contains the final input for VEP.
 
-VEP before filtering: https://www.ensembl.org/tools/vep/submissions/4dZmHIGVOuqMBc
-VEP after filtering: https://www.ensembl.org/tools/vep/submissions/1jldYJcUJqntA1
+***Observing called variants after genotyping and after filtering in VEP:***
+
+<img src="images/panel_2b_scatterplot.png" width="600">
 
 * ***Annotation:***
 
