@@ -86,8 +86,8 @@ Phred score for all bases was at the level of 30 because the data underwent trim
 
 * ***Trimming:***
 
-This step was performed as a required part of the NGS data analysis using `fastp` tool.
-Generally, this step could be skipped because of the previous data processing (bases already have required Phred score and there are no adapters).
+Trimming was included as an additional QC step. 
+GATK Best Practices consider it optional, since BWA-MEM soft-clips residual adapter sequence.
 
 * ***Alignment:***
 
