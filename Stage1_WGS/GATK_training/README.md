@@ -35,18 +35,21 @@
 
 ## Repository structure
 
-```
+```bash
 Genome_Data_Science_HackBio/
-|--- Stage1_WGS
-        |--- GATK_training
-                  |--- data/
-                  |--- images/
-                  |--- results/
-                  |--- 00_setup_references.sh
-                  |--- 01_get_data.sh
-                  |--- 02_pipeline.sh
-                  |--- .gitignore
-```
+├── README.md
+└── Stage1_WGS/
+    ├── README.md
+    └── GATK_training
+         ├── README.md
+         ├── data/
+         ├── images/
+         ├── results/
+         ├── 00_setup_references.sh
+         ├── 01_get_data.sh
+         ├── 02_pipeline.sh
+         └── .gitignore   # excludes large files (FASTQ, BAM, CRAM)
+ ```
 
 ------------------------------------------------------------------------
 
