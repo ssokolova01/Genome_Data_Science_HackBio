@@ -148,16 +148,6 @@ Pathologic predicted molecular consequences are present:
 
 <img src="images/VEP_GATK_training_before_Filtering.png" width="1200">
 
-* ***Filtering:***
-
-Three tools were used for variant filtration.
-
-`gatk VariantFiltration` flagged variants failing GATK’s standard hard filters (QD < 2, QUAL < 30, FS > 60, MQ < 40). 
-
-These let two low-quality calls pass, so `bcftools filter` added an allele-balance filter (alternate reads < 20% of depth). 
-
-`bcftools view` kept only PASS variants: 64 of ~100.
-
 ***Observing recalibrated reads in IGV tool:***
 
 *files:* BQSR/NA12878_recal.bam, BQSR/NA12878_recal.bai
@@ -181,6 +171,16 @@ Aligned recalibrated reads:
 Aligned recalibrated reads with called variants:
 
 <img src="images/IGV_Calls_GATK_training_NA12878.png" width="1200">
+
+* ***Filtering:***
+
+Three tools were used for variant filtration.
+
+`gatk VariantFiltration` flagged variants failing GATK’s standard hard filters (QD < 2, QUAL < 30, FS > 60, MQ < 40). 
+
+These let two low-quality calls pass, so `bcftools filter` added an allele-balance filter (alternate reads < 20% of depth). 
+
+`bcftools view` kept only PASS variants: 64 of ~100.
 
 ***Observing called variants after filtering in VEP:***
 
