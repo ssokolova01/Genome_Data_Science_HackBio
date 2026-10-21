@@ -118,6 +118,10 @@ Using `gatk GenotypeGVCFs`, the final VCF file was obtained.
 The VCF file contains characteristics of all variants issued from analysis of the sample reads.
 Based on these characteristics, variants can be filtered for the final annotation step.
 
+VCF file analysis in VEP before filtering:
+
+<img src="images/panel_2b_scatterplot.png" width="600">
+
 * ***Filtering:***
 
 Three tools were used for variant filtration.
