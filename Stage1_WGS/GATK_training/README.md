@@ -1,6 +1,6 @@
 # Variant Detection with GATK (Genome Analysis Toolkit) pipeline. #
 
-## Objective: Analysis of a genome sequencing data issued from WGS and truncated for a more technically manageable data with the aim to identify possible pathological variants in an individual.
+## Objective: Analysis of a genome sequencing data issued from WGS and restricted to the CFTR region with the aim to identify possible pathogenic variants in an individual.
 
 **Created as part of the HackBio internship Genome Data Science (Fundamentals)**
 
@@ -10,11 +10,10 @@
 
 ### Files required for analysis:
 
-* Human Reference Genome (`/tmp/ref/Homo_sapiens_assembly38.fasta`)
-* Human reference genome index (`/tmp/ref/Homo_sapiens_assembly38.fasta.fai`, `/tmp/ref/Homo_sapiens_assembly38.dict`, `/tmp/ref/Homo_sapiens_assembly38.bwa.index`)
-* Known sites on the human genome (`Homo_sapiens_assembly38.known_indels.vcf.gz.tbi`)
+* Reference Genome: GRCh38 chromosome 7 (`chr7.fa`, `.chr7.fai`, `chr7.dict` and `chr7.bwa.index`)
+* Known indel sites on chromosome 7 (`known_indels_chr7.vcf.gz` + `known_indels_chr7.vcf.gz.tbi`)
 * Sample Genome (`NA12878_R1.fastq.gz`, `NA12878_R2.fastq.gz`)
-* Genome index files (`1000G_2504_high_coverage.sequence.index`, `1000G_698_related_high_coverage.sequence.index`)
+* 1000 Genomes sample index files (`1000G_2504_high_coverage.sequence.index`, `1000G_698_related_high_coverage.sequence.index`)
 
 --------------------------------------------------------------------
 
@@ -61,13 +60,13 @@ For technical reasons (end of access to initial files and work from the personal
 
 Scripts were run from a working directory in Google Cloud Shell; large files were kept outside the repository.
 
-### 1. Setup reference data for analysis.
+### 1. Setup reference data.
 
-* Find an open source database with human sequenced data.
-* Truncate and download files with reference genome data.
-* Download files with index data for alignment and annotation steps.
+* Use the public Broad Institute hg38 resource bundle.
+* Extract chromosome 7 and download files with reference genome data.
+* Download files with index data for alignment and BQSR.
 
-### 2. Setup sample data for analysis. 
+### 2. Setup sample data. 
 
 * NA12878 (the daughter in CEPH trio 1463) was selected as the best-characterised benchmark genome.
 * Find the address of NA12878’s CRAM file in the 1000 Genomes index files.
@@ -84,9 +83,9 @@ This step was performed as a required part of NGS data analysis using `fastqc` t
 
 Both reads had warning flags for "Per tile sequencing quality" and for "Per sequence GC content" modules. 
 
-GC warning was expected, because the reads come from a single 350 kb region rather than the whole genome.
+The per-tile warning showed only small random fluctuations, common on NovaSeq flow cells.
 
-These warning flags can be explained by truncation during the sample preparation stage.
+GC warning was expected, because the reads come from a single 350 kb region rather than the whole genome.
 
 There were no fail flags for any module. 
 
@@ -94,7 +93,7 @@ All base qualities appear as Phred 30 because the source CRAM files store binned
 
 * ***Trimming:***
 
-Trimming was included as an additional QC step. Bases already have required Phred score and no adapters.
+Trimming was included as an additional QC step.
 
 GATK Best Practices consider it optional, since BWA-MEM soft-clips residual adapter sequence.
 
@@ -116,15 +115,15 @@ From this step, GATK framework was applied.
 
 * ***BQSR:***
 
-`BaseRecalibrator` modelled systematic errors in base quality scores using known indel sites. This allows to avoid mistaking between real variation and errors. 
+The sequencer’s quality scores contain systematic errors. 
 
-`ApplyBQSR` applied this model to recalibrate the base qualities.
+`BaseRecalibrator` measured these errors, using known indel sites so that real variants are not counted as errors. 
+
+`ApplyBQSR` then corrected (recalibrated) the quality scores based on the `BaseRecalibrator` measurements.
 
 * ***Variant Calling:***
 
-File issued from the BQSR step was called for variants using `gatk HaplotypeCaller` tool. 
-
-Recalibrated reads were called for variants based on the reference genome.
+`gatk HaplotypeCaller` called variants from the recalibrated reads.
 
 `HaplotypeCaller` was run in GVCF mode (`-ERC GVCF`), restricted to the CFTR region with `-L` (without it, the run failed with an out-of-memory error).
 
@@ -144,7 +143,7 @@ Based on these characteristics, variants can be filtered for the final annotatio
 
 *image:* 
 
-Pathologic predicted molecular consequences are present:
+Protein-altering variants are present:
 
 <img src="images/VEP_GATK_training_before_Filtering.png" width="1200">
 
@@ -176,11 +175,11 @@ Aligned recalibrated reads with called variants:
 
 Three tools were used for variant filtration.
 
-`gatk VariantFiltration` flagged variants failing GATK’s standard hard filters (QD < 2, QUAL < 30, FS > 60, MQ < 40). 
+`gatk VariantFiltration` flagged variants that failed GATK’s standard hard filters (QD < 2, QUAL < 30, FS > 60, MQ < 40). 
 
-These let two low-quality calls pass, so `bcftools filter` added an allele-balance filter (alternate reads < 20% of depth). 
+These let two low-quality calls pass, so `bcftools filter` added an allele-balance filter (< 20% of depth: variants supported by less than 20% of reads were marked as LowAB). 
 
-`bcftools view` kept only PASS variants: 64 of ~100.
+`bcftools view` kept only the variants that passed all filters (PASS).
 
 ***Observing called variants after filtering in VEP:***
 
@@ -190,7 +189,7 @@ These let two low-quality calls pass, so `bcftools filter` added an allele-balan
 
 *image:* 
 
-No pathogenic predicted molecular consequences are identified:
+No protein-altering variants:
 
 <img src="images/VEP_GATK_training_after_Filtering.png" width="1200">
 
@@ -204,22 +203,43 @@ Before filtering, the list of variants included 68 positions.
 
 Three clustered calls were found within 15 bp, supported by the same four reads. 
 
+```
 chr7    117548682       .       C       A       59.64   QD2
-
 chr7    117548786       .       AGTT    A       79.60   PASS
-
 chr7    117548796       .       G       T       79.64   PASS
+```
 
 VEP classified two as protein-altering (missense, in-frame deletion) and one as synonymous. 
 
 After filtering, 64 variants left, with no pathogenic variants detected.
 
+```
 chr7    117548682       .       C       A       59.64   QD2;LowAB
-
 chr7    117548786       .       AGTT    A       79.6    LowAB
-
 chr7    117548796       .       G       T       79.64   LowAB
+```
 
-The pathogenic variants discovered before filtering are more likely artefacts left after sample data preparation.
+These protein-altering calls were artefacts, most likely misaligned reads next to a repetitive region (see IGV).
 
+## Skills demonstrated
+
+* End-to-end germline variant calling on WGS data (GATK Best Practices)
+* Quality control and interpretation of FastQC reports
+* Working with SAM/BAM/CRAM, VCF and GVCF formats
+* Extraction of a genomic region from public remote data (1000 Genomes, Broad bucket)
+* Variant filtering, including a custom allele-balance filter
+* Visual validation of variant calls in IGV
+* Variant annotation with Ensembl VEP
+* Critical evaluation of false-positive calls
+* Reproducible Bash scripting and version control with Git/GitHub
+* Working within limited computing resources (Google Cloud Shell)
+
+## Tools
+
+* FastQC, fastp
+* BWA-MEM
+* samtools, bcftools
+* GATK 4.6 (SortSam, MarkDuplicates, BuildBamIndex, BaseRecalibrator, ApplyBQSR, HaplotypeCaller, GenotypeGVCFs, VariantFiltration, CreateSequenceDictionary)
+* IGV (web), Ensembl VEP (web)
+* conda, Google Cloud Shell, Git/GitHub
 
