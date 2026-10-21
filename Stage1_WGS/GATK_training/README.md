@@ -205,7 +205,9 @@ Before filtering, the list of variants included 68 positions.
 Three clustered calls were found within 15 bp, supported by the same four reads. 
 
 chr7    117548682       .       C       A       59.64   QD2
+
 chr7    117548786       .       AGTT    A       79.60   PASS
+
 chr7    117548796       .       G       T       79.64   PASS
 
 VEP classified two as protein-altering (missense, in-frame deletion) and one as synonymous. 
@@ -213,7 +215,9 @@ VEP classified two as protein-altering (missense, in-frame deletion) and one as 
 After filtering, 64 variants left, with no pathogenic variants detected.
 
 chr7    117548682       .       C       A       59.64   QD2;LowAB
+
 chr7    117548786       .       AGTT    A       79.6    LowAB
+
 chr7    117548796       .       G       T       79.64   LowAB
 
 The pathogenic variants discovered before filtering are more likely artefacts left after sample data preparation.
