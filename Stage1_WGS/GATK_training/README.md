@@ -115,7 +115,7 @@ Then, `gatk ApplyBQSR` tool treated the reads based on that table and saved the 
 
 *image:* 
 
-<img src="images/IGV_GATK_training_NA12878.png" width="1800">
+<img src="images/IGV_GATK_training_NA12878.png" width="1200">
 
 * ***Variant Calling:***
 
