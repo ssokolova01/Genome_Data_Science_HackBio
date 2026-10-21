@@ -12,7 +12,7 @@
 
 ### Files required for analysis:
 
-* Reference Genome: GRCh38 chromosome 7 (`chr7.fa`, `.chr7.fai`, `chr7.dict` and `chr7.bwa.index`)
+* Reference Genome: GRCh38 chromosome 7 (`chr7.fa`, `.chr7.fa.fai`, `chr7.dict`; BWA index files: `chr7.fa.amb`, `chr7.fa.ann`, `chr7.fa.bwt`, `chr7.fa.pac`, `chr7.fa.sa`)
 * Known indel sites on chromosome 7 (`known_indels_chr7.vcf.gz` + `known_indels_chr7.vcf.gz.tbi`)
 * Sample Genome (`NA12878_R1.fastq.gz`, `NA12878_R2.fastq.gz`)
 * 1000 Genomes sample index files (`1000G_2504_high_coverage.sequence.index`, `1000G_698_related_high_coverage.sequence.index`)
@@ -21,7 +21,7 @@
 
 ## Task
 
-* Analyse eukaryotic human WGS data (already used for analysis) including steps: 
+* Analyze eukaryotic human previously processed WGS data including steps: 
   * Quality Control (QC);
   * Trimming;
   * Alignment;
@@ -32,7 +32,7 @@
   * Filtering;
   * Annotation.
 * Apply GATK workflow after the alignment step of the analysis. 
-* Search for possible pathological variants.
+* Search for possible pathogenic variants.
 
 ---------------------------------------------------------------------------
 
@@ -72,7 +72,7 @@ Scripts were run from a working directory in Google Cloud Shell; large files wer
 
 * NA12878 (the daughter in CEPH trio 1463) was selected as the best-characterised benchmark genome.
 * Find the address of NA12878’s CRAM file in the 1000 Genomes index files.
-* Truncate and download files to leave only a region where data of analysis interest was located.
+* Extract only the CFTR region from the remote CRAM file.
 * Sort reads by names to pair them properly.
 * Reads were converted to FASTQ with `samtools fastq` (equivalent to `gatk SamToFastq`).
 * Pair-end reads were used for analysis, so there were two analysed sample files.
@@ -111,7 +111,7 @@ From this step, GATK framework was applied.
 
 `gatk SortSam` sorted reads by genomic coordinate. 
 
-`gatk MarkDuplicates` flagged PCR and flagged duplicates (10.8% of read pairs, including 817 optical duplicate pairs) so they are not counted as independent evidence.
+`gatk MarkDuplicates` flagged PCR and optical duplicates (10.8% of read pairs, including 817 optical duplicate pairs) so they are not counted as independent evidence.
 
 `BuildBamIndex` indexed the result.
 
@@ -177,7 +177,7 @@ Aligned recalibrated reads with called variants:
 
 Three tools were used for variant filtration.
 
-`gatk VariantFiltration` flagged variants that failed GATK’s standard hard filters (QD < 2, QUAL < 30, FS > 60, MQ < 40). 
+`gatk VariantFiltration` flagged variants that failed GATK’s standard hard filters: QD < 2 (low quality relative to depth), QUAL < 30 (low confidence), FS > 60 (strand bias) and MQ < 40 (poor mapping quality).
 
 These let two low-quality calls pass, so `bcftools filter` added an allele-balance filter (< 20% of depth: variants supported by less than 20% of reads were marked as LowAB). 
 
@@ -213,7 +213,7 @@ chr7    117548796       .       G       T       79.64   PASS
 
 VEP classified two as protein-altering (missense, in-frame deletion) and one as synonymous. 
 
-After filtering, 64 variants left, with no pathogenic variants detected.
+After filtering, 64 variants left, with no protein-altering variants remaining.
 
 ```
 chr7    117548682       .       C       A       59.64   QD2;LowAB
