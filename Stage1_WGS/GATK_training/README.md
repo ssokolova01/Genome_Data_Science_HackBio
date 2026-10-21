@@ -107,6 +107,14 @@ The quality of bases was now evaluated based in the alignment results, not on th
 First, `gatk BaseRecalibrator` tool created a table of mismatches.
 Then, `gatk ApplyBQSR` tool treated the reads based on that table and saved the matching aligned regions.
 
+Observing recalibrated reads in IGV:
+
+files: BQSR/NA12878_recal.bam, BQSR/NA12878_recal.bai
+
+genome: hg38; chr7:117,548,660-117,548,820
+
+image: <img src="images/panel_2b_scatterplot.png" width="600">
+
 * ***Variant Calling:***
 
 File issued from the BQSR step was called for variants using `gatk HaplotypeCaller` tool. 
