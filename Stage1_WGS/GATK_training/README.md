@@ -5,7 +5,9 @@
 **Created as part of the HackBio internship Genome Data Science (Fundamentals)**
 
 > **Data: 1000 Genomes Project (NA12878, 30X WGS)**
+> 
 > **Reference files: Broad Institute hg38 resource bundle**
+> 
 > **Sample files: NA12878 paired-end reads (R1, R2), CFTR region**
 
 ### Files required for analysis:
