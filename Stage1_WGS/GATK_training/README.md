@@ -4,7 +4,7 @@
 
 **Created as part of the HackBio internship Genome Data Science (Fundamentals)**
 
-> **Dataset: 1000 Genomes Database, Broad Institute**
+> **Data: 1000 Genomes Project (NA12878, 30X WGS); reference files: Broad Institute hg38 resource bundle**
 
 ### Files required for analysis:
 
