@@ -13,7 +13,7 @@
 ### Files required for analysis:
 
 * Reference Genome: GRCh38 chromosome 7 (`chr7.fa`, `chr7.fa.fai`, `chr7.dict`; BWA index files: `chr7.fa.amb`, `chr7.fa.ann`, `chr7.fa.bwt`, `chr7.fa.pac`, `chr7.fa.sa`)
-* Known indel sites on chromosome 7 (`known_indels_chr7.vcf.gz` + `known_indels_chr7.vcf.gz.tbi`)
+* Known indel sites on chromosome 7 (`known_indels_chr7.vcf.gz`, `known_indels_chr7.vcf.gz.tbi`)
 * Sample Genome (`NA12878_R1.fastq.gz`, `NA12878_R2.fastq.gz`)
 * 1000 Genomes sample index files (`1000G_2504_high_coverage.sequence.index`, `1000G_698_related_high_coverage.sequence.index`)
 
