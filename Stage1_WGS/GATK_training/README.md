@@ -115,7 +115,7 @@ Then, `gatk ApplyBQSR` tool treated the reads based on that table and saved the 
 
 *image:* 
 
-Aligned recalibrated reads with variants:
+Aligned recalibrated reads:
 
 <img src="images/IGV_GATK_training_NA12878.png" width="1200">
 
@@ -132,7 +132,7 @@ Recalibrated reads were called for variants based on the reference genome.
 
 *image:* 
 
-Aligned recalibrated reads with variants:
+Aligned recalibrated reads with called variants:
 
 <img src="images/IGV_Calls_GATK_training_NA12878.png" width="1200">
 
@@ -144,7 +144,15 @@ Based on these characteristics, variants can be filtered for the final annotatio
 
 ***Observing called variants after genotyping and before filtering in VEP:***
 
-<img src="images/panel_2b_scatterplot.png" width="600">
+*files:* NA12878.vcf
+
+*genome:* GRCh38.p14
+
+*image:* 
+
+Pathologic predicted molecular consequences are present:
+
+<img src="images/VEP_GATK_training_before_Filtering.png" width="1200">
 
 * ***Filtering:***
 
@@ -155,7 +163,15 @@ Three tools were used for variant filtration.
 
 ***Observing called variants after genotyping and after filtering in VEP:***
 
-<img src="images/panel_2b_scatterplot.png" width="600">
+*files:* NA12878.pass.vcf
+
+*genome:* GRCh38.p14
+
+*image:* 
+
+No pathologic predicted molecular consequences are identified:
+
+<img src="images/VEP_GATK_training_after_Filtering.png" width="1200">
 
 * ***Annotation:***
 
