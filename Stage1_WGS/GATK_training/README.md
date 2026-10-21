@@ -113,7 +113,7 @@ files: BQSR/NA12878_recal.bam, BQSR/NA12878_recal.bai
 
 genome: hg38; chr7:117,548,660-117,548,820
 
-image: <img src="images/panel_2b_scatterplot.png" width="600">
+image: <img src="images/IGV_GATK_training_NA12878.png" width="600">
 
 * ***Variant Calling:***
 
