@@ -115,12 +115,26 @@ Then, `gatk ApplyBQSR` tool treated the reads based on that table and saved the 
 
 *image:* 
 
+Aligned recalibrated reads with variants:
+
 <img src="images/IGV_GATK_training_NA12878.png" width="1200">
 
 * ***Variant Calling:***
 
 File issued from the BQSR step was called for variants using `gatk HaplotypeCaller` tool. 
 Recalibrated reads were called for variants based on the reference genome.
+
+***Observing recalibrated reads with variant calls in IGV:***
+
+*files:* BQSR/NA12878_recal.bam, BQSR/NA12878_recal.bai, VCF/NA12878.vcf.gz, VCF/NA12878.vcf.gz.tbi
+
+*genome:* hg38; chr7:117,548,660-117,548,820
+
+*image:* 
+
+Aligned recalibrated reads with variants:
+
+<img src="images/IGV_Calls_GATK_training_NA12878.png" width="1200">
 
 * ***Genotyping:***
 
