@@ -1,6 +1,6 @@
-# Run from ~/Documents/cftr_project after: source ~/start_session.sh
-
 #!/bin/bash
+
+# Run from ~/Documents/cftr_project after: source ~/start_session.sh
 
 # QUALITY CONTROL
 
