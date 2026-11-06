@@ -80,7 +80,7 @@ SAMPLES=(
         "HG01502"
 )
 
-# Loop for sorting duplicates for boy and father reads.
+# Loop for sorting, marking duplicates and indexing for boy and father reads.
 for SAMPLE in "${SAMPLES[@]}"; do
                 gatk SortSam -I cftr_mapped/${SAMPLE}_aligned.bam -O cftr_sorted/${SAMPLE}_sorted.bam -SORT_ORDER coordinate
                 gatk MarkDuplicates -I cftr_sorted/${SAMPLE}_sorted.bam -O cftr_marked/${SAMPLE}_marked.bam -M cftr_marked/${SAMPLE}_metrics.txt
