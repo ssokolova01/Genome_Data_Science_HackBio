@@ -1,4 +1,8 @@
+# Run from ~/Documents/cftr_project after: source ~/start_session.sh
+
 #!/bin/bash
+
+# QUALITY CONTROL
 
 # Create a directory for output form quality control (QC).
 mkdir -p cftr_qc
@@ -14,6 +18,8 @@ for SAMPLE in "${SAMPLES[@]}"; do
         fastqc ../shared_data/${SAMPLE}_R1.fastq.gz ../shared_data/${SAMPLE}_R2.fastq.gz -o cftr_qc
 
 done
+
+# TRIMMING
 
 # Create a directory for the trimmed reads output.
 mkdir -p cftr_trimmed
@@ -38,6 +44,8 @@ for SAMPLE in "${SAMPLES[@]}"; do
                   
 done
 
+# ALIGNMENT
+
 # Create a directory for output alignment files.
 mkdir -p cftr_mapped
 
@@ -55,7 +63,10 @@ for SAMPLE in "${SAMPLES[@]}"; do
 
 done
 
-# Activation of GATK command.
+# SORTING READS AND MARKING DUPLICATES
+
+# Activation of GATK command: FOR ALL GATK PIPELINE STEPS FROM SORTING TO SITE-LEVEL FILTERING.
+
 # Use GATK (with its own Java) from /tmp/gatk_env inside this script.
 export PATH=/tmp/gatk_env/bin:$PATH
 
@@ -77,8 +88,7 @@ for SAMPLE in "${SAMPLES[@]}"; do
 
 done
 
-# Use GATK (with its own Java) from /tmp/gatk_env inside this script.
-export PATH=/tmp/gatk_env/bin:$PATH
+# BASE QUALITY SCORE RECALIBRATION
 
 # Create a directory for Base Quality Score Recalibration output.
 mkdir -p cftr_BQSR
@@ -95,11 +105,7 @@ for SAMPLE in "${SAMPLES[@]}"; do
 
 done
 
-# Activation of GATK command.
-# Use GATK (with its own Java) from /tmp/gatk_env inside this script.
-export PATH=/tmp/gatk_env/bin:$PATH
-
-
+# VARIANT CALLING
 
 # Create a directory for variant calling output for boy and father samples.
 mkdir -p cftr_VCF
@@ -115,8 +121,7 @@ for SAMPLE in "${SAMPLES[@]}"; do
                 gatk HaplotypeCaller -I cftr_BQSR/${SAMPLE}_recal.bam -R /tmp/ref/chr7.fa -O cftr_VCF/${SAMPLE}.g.vcf.gz -ERC GVCF -L chr7:117400000-117750000
 done
 
-# Use GATK (with its own Java) from /tmp/gatk_env inside this script.
-export PATH=/tmp/gatk_env/bin:$PATH
+# COMBINE GENOTYPES AND JOINT GENOTYPING
 
 # 1. Combine GVCFs of the boy and father into one multi-sample GVCF file.
 
@@ -136,8 +141,7 @@ gatk GenotypeGVCFs \
     -O cftr_VCF/family.vcf.gz \
     -L chr7:117400000-117750000
 
-# Use GATK (with its own Java) from /tmp/gatk_env inside this script.
-export PATH=/tmp/gatk_env/bin:$PATH
+# FILTERING
 
 # 1. Site-level hard filters (GATK standard).
 # Flag variant positions that do not pass the GATK quality control.
