@@ -160,8 +160,8 @@ bcftools view -f PASS cftr_VCF/family.filtered_ab.vcf.gz -Oz -o cftr_VCF/family.
 bcftools index -t cftr_VCF/family.pass.vcf.gz
 
 # 4. Keep only variants inside the CFTR gene (GRCh38, NCBI Gene ID 1080).
-   bcftools view -r chr7:117480025-117668665 cftr_VCF/family.pass.vcf.gz -Oz -o cftr_VCF/family.CFTR.vcf.gz
-   bcftools index -t cftr_VCF/family.CFTR.vcf.gz
+bcftools view -r chr7:117480025-117668665 cftr_VCF/family.pass.vcf.gz -Oz -o cftr_VCF/family.CFTR.vcf.gz
+bcftools index -t cftr_VCF/family.CFTR.vcf.gz
 
 # 5. Table of genotypes for the father-son comparison (columns: POS, REF, ALT, father, boy).
-   bcftools query -f '%POS\t%REF\t%ALT\t[%GT\t]\n' cftr_VCF/family.CFTR.vcf.gz > cftr_genotypes.tsv
+bcftools query -f '%POS\t%REF\t%ALT\t[%GT\t]\n' cftr_VCF/family.CFTR.vcf.gz > cftr_genotypes.tsv
