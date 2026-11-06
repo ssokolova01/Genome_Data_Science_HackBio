@@ -1,0 +1,2 @@
+ftp://ftp.sra.ebi.ac.uk/vol1/run/ERR324/ERR3241916/HG01500.final.cram
+ftp://ftp.sra.ebi.ac.uk/vol1/run/ERR398/ERR3988891/HG01502.final.cram
