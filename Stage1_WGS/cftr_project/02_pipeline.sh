@@ -41,7 +41,7 @@ for SAMPLE in "${SAMPLES[@]}"; do
                   -O "cftr_trimmed/${SAMPLE}_R2.fastq.gz" \
                   --html "cftr_trimmed/${SAMPLE}_fastp.html"\
                  --json "cftr_trimmed/${SAMPLE}_fastp.json"
-
+                  
 done
 
 # ALIGNMENT
@@ -142,10 +142,10 @@ gatk GenotypeGVCFs \
     -O cftr_VCF/family.vcf.gz \
     -L chr7:117400000-117750000
 
-# CHECK: Number of variants after variant calling and sample combination.
+# CHECK: Number of variants after variant calling and sample combination. 
 for f in cftr_VCF/*.g.vcf.gz; do echo $f; zcat $f | grep -v "^#" | awk '$5 != "<NON_REF>"' | wc -l; done
 
-# CHECK: Number of variants after genotyping.
+# CHECK: Number of variants after genotyping. 
 zcat cftr_VCF/family.vcf.gz | grep -v "^#" | wc -l
 
 # FILTERING
@@ -216,3 +216,4 @@ awk -F'\t' '{
 awk -F'\t' '{f=$4; b=$5; gsub(/\|/,"/",f); gsub(/\|/,"/",b); if (b!="0/0" && b!="./." && f=="0/0") print}' cftr_genotypes.tsv
 # List of father-only sites
 awk -F'\t' '{f=$4; b=$5; gsub(/\|/,"/",f); gsub(/\|/,"/",b); if (f!="0/0" && f!="./." && b=="0/0") print}' cftr_genotypes.tsv
+
