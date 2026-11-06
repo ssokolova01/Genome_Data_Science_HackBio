@@ -197,14 +197,17 @@ zcat cftr_VCF/family.CFTR.vcf.gz | grep -v "^#" | wc -l
 # 5. Table of genotypes for the father-son comparison (columns: POS, REF, ALT, father, boy).
 bcftools query -f '%POS\t%REF\t%ALT\t[%GT\t]\n' cftr_VCF/family.CFTR.vcf.gz > cftr_genotypes.tsv
 
-# GENOTYPE COMPARISON AND INHERETED PATTERNS
-# Comparison check (missing genotypes)
+# GENOTYPE COMPARISON AND INHERITED PATTERNS
+# Columns of cftr_genotypes.tsv: $1 POS, $2 REF, $3 ALT, $4 father (HG01500), $5 boy (HG01502).
+# gsub turns phased genotypes (0|1) into unphased (0/1), so both are compared the same way.
+# Comparison check: sites with a missing genotype in the boy or the father.
 awk -F'\t' '$4=="./." || $5=="./."' cftr_genotypes.tsv
 # Count the inheritance pattern.
+# Missing genotypes are checked first, so a site with no reliable call is never counted as a variant.
 awk -F'\t' '{
   f=$4; b=$5; gsub(/\|/,"/",f); gsub(/\|/,"/",b);
-  if (b=="0/0") cat="boy has no variant";
-  else if (b=="./." || f=="./.") cat="missing in boy or father";
+  if (b=="./." || f=="./.") cat="missing in boy or father";
+  else if (b=="0/0") cat="father only";
   else if (f=="0/0") cat="boy only (maternal or de novo)";
   else cat="shared with father (possibly paternal)";
   print cat
