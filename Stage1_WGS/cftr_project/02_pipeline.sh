@@ -4,7 +4,7 @@
 
 # QUALITY CONTROL
 
-# Create a directory for output form quality control (QC).
+# Create a directory for output from quality control (QC).
 mkdir -p cftr_qc
 
 # QC of the raw reads of boy and father.
@@ -70,7 +70,7 @@ done
 # Use GATK (with its own Java) from /tmp/gatk_env inside this script.
 export PATH=/tmp/gatk_env/bin:$PATH
 
-# Create repositories for sorted and marked duplicates output.
+# Create directories for sorting, marking duplicates and indexing output.
 mkdir -p cftr_sorted
 mkdir -p cftr_marked
 
