@@ -121,6 +121,7 @@ for SAMPLE in "${SAMPLES[@]}"; do
                 gatk HaplotypeCaller -I cftr_BQSR/${SAMPLE}_recal.bam -R /tmp/ref/chr7.fa -O cftr_VCF/${SAMPLE}.g.vcf.gz -ERC GVCF -L chr7:117400000-117750000
 done
 
+
 # COMBINE GENOTYPES AND JOINT GENOTYPING
 
 # 1. Combine GVCFs of the boy and father into one multi-sample GVCF file.
@@ -140,6 +141,12 @@ gatk GenotypeGVCFs \
     -V cftr_VCF/family.g.vcf.gz \
     -O cftr_VCF/family.vcf.gz \
     -L chr7:117400000-117750000
+
+# CHECK: Number of variants after variant calling and sample combination. 
+for f in cftr_VCF/*.g.vcf.gz; do echo $f; zcat $f | grep -v "^#" | awk '$5 != "<NON_REF>"' | wc -l; done
+
+# CHECK: Number of variants after genotyping. 
+zcat cftr_VCF/family.vcf.gz | grep -v "^#" | wc -l
 
 # FILTERING
 
@@ -163,9 +170,47 @@ bcftools filter -S . -e 'GT="het" & FMT/AD[:1]/FMT/DP < 0.2' \
 bcftools view -f PASS cftr_VCF/family.filtered_ab.vcf.gz -Oz -o cftr_VCF/family.pass.vcf.gz
 bcftools index -t cftr_VCF/family.pass.vcf.gz
 
+# CHECK: SITE-LEVEL FILTERING
+# Number of variants after filtering.
+zcat cftr_VCF/family.pass.vcf.gz | grep -v "^#" | wc -l
+# Summary for site-level filtering.
+zcat cftr_VCF/family.filtered.vcf.gz | grep -v "^#" | cut -f 7 | sort | uniq -c
+# Details for variants that did not pass the site-level filter.
+bcftools query -H -i 'FILTER!="PASS"' -f '%POS\t%REF\t%ALT\t%QUAL\t%FILTER\t%INFO/QD\t%INFO/MQ\t[%GT:%AD\t]\n' cftr_VCF/family.filtered.vcf.gz
+
+# CHECK: ALLELE-LEVEL FILTERING
+# Number of allele filtered cells (not rows!).
+zcat cftr_VCF/family.filtered_ab.vcf.gz | grep -v "^#" | grep -o "\./\.:" | wc -l
+# Number of variants filtered by allele.
+zcat cftr_VCF/family.filtered_ab.vcf.gz | grep -v "^#" | grep "\./\.:" | cut -f 1,2,4,5,7,10,11 | wc -l
+# Detail for allele filtered variants.
+zcat cftr_VCF/family.filtered_ab.vcf.gz | grep -v "^#" | grep "\./\.:" | cut -f 1,2,4,5,7,10,11
+
 # 4. Keep only variants inside the CFTR gene (GRCh38, NCBI Gene ID 1080).
 bcftools view -r chr7:117480025-117668665 cftr_VCF/family.pass.vcf.gz -Oz -o cftr_VCF/family.CFTR.vcf.gz
 bcftools index -t cftr_VCF/family.CFTR.vcf.gz
 
+# CHECK: CFTR-RESTRICTED VARIANTS
+# Number of variants in the CFTR region.
+zcat cftr_VCF/family.CFTR.vcf.gz | grep -v "^#" | wc -l
+
 # 5. Table of genotypes for the father-son comparison (columns: POS, REF, ALT, father, boy).
 bcftools query -f '%POS\t%REF\t%ALT\t[%GT\t]\n' cftr_VCF/family.CFTR.vcf.gz > cftr_genotypes.tsv
+
+# GENOTYPE COMPARISON AND INHERETED PATTERNS
+# Comparison check (missing genotypes)
+awk -F'\t' '$4=="./." || $5=="./."' cftr_genotypes.tsv
+# Count the inheritance pattern.
+awk -F'\t' '{
+  f=$4; b=$5; gsub(/\|/,"/",f); gsub(/\|/,"/",b);
+  if (b=="0/0") cat="boy has no variant";
+  else if (b=="./." || f=="./.") cat="missing in boy or father";
+  else if (f=="0/0") cat="boy only (maternal or de novo)";
+  else cat="shared with father (possibly paternal)";
+  print cat
+}' cftr_genotypes.tsv | sort | uniq -c
+# List of boy-only sites
+awk -F'\t' '{f=$4; b=$5; gsub(/\|/,"/",f); gsub(/\|/,"/",b); if (b!="0/0" && b!="./." && f=="0/0") print}' cftr_genotypes.tsv
+# List of father-only sites
+awk -F'\t' '{f=$4; b=$5; gsub(/\|/,"/",f); gsub(/\|/,"/",b); if (f!="0/0" && f!="./." && b=="0/0") print}' cftr_genotypes.tsv
+
