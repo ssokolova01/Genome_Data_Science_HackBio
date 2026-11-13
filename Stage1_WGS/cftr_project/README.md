@@ -64,7 +64,24 @@ Genome_Data_Science_HackBio/
 * `start_session.sh`: Run with source at the start of each Cloud Shell session. Activates the conda environment, installs GATK in /tmp if missing and rebuilds the chr7 reference files (FASTA with index, BWA index, sequence dictionary, known indels subset) in /tmp/ref if they were wiped.
 * `00_setup_references.sh`: Downloads GRCh38 chromosome 7 and known indels from the Broad GATK bundle. Creates FASTA, BWA and GATK indexes.
 * `01_get_data_cftr.sh`: Selects the son–father pair from the 1000 Genomes pedigree file and extracts the CFTR region (±80 kb) from the remote CRAM files into paired FASTQ.
-* `02_pipeline.sh`: Main analysis pipeline: FastQC --> fastp --> BWA-MEM --> SortSam --> MarkDuplicates --> BQSR --> HaplotypeCaller (GVCF) --> CombineGVCFs --> GenotypeGVCFs --> GATK hard filters and allele-balance filter (bcftools) --> CFTR restriction.
+* `02_pipeline.sh`: Main analysis pipeline: FastQC --> fastp --> BWA-MEM --> SortSam --> MarkDuplicates --> BQSR --> HaplotypeCaller (GVCF) --> CombineGVCFs --> GenotypeGVCFs --> GATK hard filters and allele-balance filter (bcftools) --> CFTR restriction --> father-son comparison. Includes check commands after each main step.
+
+**How to run**
+
+```bash
+source start_session.sh        # at the start of every session
+bash 01_get_data_cftr.sh       # once: extracts the CFTR reads into ~/Documents/shared_data/
+cd ~/Documents/cftr_project
+bash 02_pipeline.sh            # full analysis
+```
+
+Expected folder layout:
+
+```
+~/Documents/
+├── shared_data/     # paired FASTQ files from 01_get_data_cftr.sh (not in the repository: large files)
+└── cftr_project/    # working folder: 02_pipeline.sh writes cftr_qc/, cftr_trimmed/, …, cftr_VCF/ here
+```
 
 **Key results**
 * 380 (father) / 386 (son) candidate positions --> 359 jointly genotyped sites --> 355 PASS --> 163 in CFTR
@@ -74,6 +91,18 @@ Genome_Data_Science_HackBio/
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+## Skills demonstrated
+- **Germline variant analysis:** End-to-end WGS pipeline following GATK Best Practices (QC, alignment, BQSR, GVCF calling, joint genotyping).
+- **Variant filtering:** Site-level hard filters and a genotype-level allele-balance filter, with critical evaluation of their limits.
+- **Inheritance analysis:** Father–son genotype comparison without the mother's data.
+- **Clinical variant interpretation:** ClinVar classifications, population frequencies, CFTR2 evidence, recognition of a known complex allele.
+- **Quality assessment:** Identification of artefacts using read evidence (IGV), allele balance and database quality flags.
+- **Reproducible work under limited resources:** Bash scripts in Google Cloud Shell (5 GB storage, region-restricted data access).
+- **Scientific communication:** Literature research and a structured clinical report.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ## Tools
-<list: FastQC, fastp, BWA-MEM, samtools, GATK, bcftools, VEP, IGV, ClinVar, gnomAD, CFTR2>
+* **Environment:** Bash, Google Cloud Shell, conda, Git.
+* **Analysis:** FastQC, fastp, BWA-MEM, samtools, GATK, bcftools, Ensembl VEP, IGV.
+* **Databases:** ClinVar, gnomAD, CFTR2, 1000 Genomes.
