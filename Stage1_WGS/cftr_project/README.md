@@ -1,6 +1,6 @@
 # CFTR Clinical Case Study: WGS Variant Analysis (Son vs Father) #
 
-## Germline variant analysis of whole-genome sequencing data from a son and his father (1000 Genomes), from quality control to clinical interpretation of variants in the CFTR gene, using GATK-based pipeline. 
+## Germline variant analysis of whole-genome sequencing data from a son and his father (1000 Genomes), from quality control to clinical interpretation of variants in the CFTR gene (gene of the cystic fibrosis, CF), using GATK-based pipeline. 
 ### No CF-causing variant was found. The son carries one benign variant and two variants of uncertain significance, all shared with his father. Full report: [CFTR_report.md](CFTR_report.md)
 
 **Created as part of the HackBio internship Genome Data Science (Fundamentals)**
@@ -21,11 +21,16 @@
 
 ## Task
 
+Execute WGS data analysis to explore pathogenic variants in the CFTR gene of the child with the following interpretation. 
 
+Whole-genome data analysis includes:
 
-
-
-
+* Quality control and alignment of raw reads to the human reference genome.
+* Variant calling in the son and the father.
+* Genome restriction to the CFTR region.
+* Comparison of the inheritance pattern of variants between the son and the father.
+* Annotate and interpret variants to identify possible pathogenic mutations using variant databases.
+* Conclude on whether the son is affected with CF based on genotype. Comment on the variant origin (inherited or de novo).
 
 ## Repository structure
 
