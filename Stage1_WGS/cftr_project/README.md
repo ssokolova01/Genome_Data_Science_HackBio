@@ -61,7 +61,7 @@ Genome_Data_Science_HackBio/
 **Environment.** Google Cloud Shell (Bash). The permanent home directory is limited to 5 GB, so reference files are kept in `/tmp` and rebuilt each session by `start_session.sh`.
 
 **Scripts**
-* `start_session.sh`: Run with source at the start of each Cloud Shell session. Activates the conda environment, installs GATK in /tmp if missing, and rebuilds the chr7 reference files (FASTA with index, BWA index, sequence dictionary, known indels subset) in /tmp/ref if they were wiped.
+* `start_session.sh`: Run with source at the start of each Cloud Shell session. Activates the conda environment, installs GATK in /tmp if missing and rebuilds the chr7 reference files (FASTA with index, BWA index, sequence dictionary, known indels subset) in /tmp/ref if they were wiped.
 * `00_setup_references.sh`: Downloads GRCh38 chromosome 7 and known indels from the Broad GATK bundle. Creates FASTA, BWA and GATK indexes.
 * `01_get_data_cftr.sh`: Selects the son–father pair from the 1000 Genomes pedigree file and extracts the CFTR region (±80 kb) from the remote CRAM files into paired FASTQ.
 * `02_pipeline.sh`: Main analysis pipeline: FastQC --> fastp --> BWA-MEM --> SortSam --> MarkDuplicates --> BQSR --> HaplotypeCaller (GVCF) --> CombineGVCFs --> GenotypeGVCFs --> GATK hard filters and allele-balance filter (bcftools) --> CFTR restriction.
