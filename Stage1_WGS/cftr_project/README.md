@@ -13,7 +13,7 @@
 > 
 > **Reference genome:** GRCh38 chromosome 7, Broad Institute GATK resource bundle.
 > 
-> **Known indels (BQSR):** chromosome 7 subset of <file name>
+> **Known indels (BQSR):** `known_indels_chr7.vcf.gz`, the chromosome 7 subset of `Homo_sapiens_assembly38.known_indels.vcf.gz` (Broad GATK bundle), created by `00_setup_references.sh`.
 >
 > **Region:** CFTR ±80 kb, chr7:117,400,000–117,750,000.
 
