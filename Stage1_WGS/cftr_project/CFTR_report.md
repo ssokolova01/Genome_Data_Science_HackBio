@@ -312,11 +312,27 @@ considered an artefact <span class="mark">\[21\]</span>.
 
 ***A: Artefact 117500278C>CT.***
 
-![Figure 1A](https://github.com/ssokolova01/Genome_Data_Science_HackBio/blob/main/Stage1_WGS/cftr_project/images/Son_Only_Variants/IGV_Son_117500278.png?raw=true)
+![Figure 2A](https://github.com/ssokolova01/Genome_Data_Science_HackBio/blob/main/Stage1_WGS/cftr_project/images/IGV_Son_Only_Variants/IGV_Son_117500278.png?raw=true)
 
-***B: 
+***B: Heterozygous variant 117500580G>A.***
 
+![Figure 2B](https://github.com/ssokolova01/Genome_Data_Science_HackBio/blob/main/Stage1_WGS/cftr_project/images/IGV_Son_Only_Variants/IGV_Son_117500278.png?raw=true)
 
+***C: Heterozygous variant 117533171C>T.***
+
+![Figure 2C](https://github.com/ssokolova01/Genome_Data_Science_HackBio/blob/main/Stage1_WGS/cftr_project/images/IGV_Son_Only_Variants/IGV_Son_117533171.png?raw=true)
+
+***D: Heterozygous variant 117599550G>C.***
+
+![Figure 2D](https://github.com/ssokolova01/Genome_Data_Science_HackBio/blob/main/Stage1_WGS/cftr_project/images/IGV_Son_Only_Variants/IGV_Son_117599550.png?raw=true)
+
+***E: Heterozygous variant 117655321G>A.***
+
+![Figure 2E](https://github.com/ssokolova01/Genome_Data_Science_HackBio/blob/main/Stage1_WGS/cftr_project/images/IGV_Son_Only_Variants/IGV_Son_117655321.png?raw=true)
+
+***F: Heterozygous variant 117661274G>A.***
+
+![Figure 2F](https://github.com/ssokolova01/Genome_Data_Science_HackBio/blob/main/Stage1_WGS/cftr_project/images/IGV_Son_Only_Variants/IGV_Son_117661274.png?raw=true)
 
 **Interpretation**
 
