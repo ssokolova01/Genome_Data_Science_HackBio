@@ -312,7 +312,7 @@ considered an artefact <span class="mark">\[21\]</span>.
 
 ***A: Artefact 117500278C>CT.***
 
-![Figure 1A](https://github.com/ssokolova01/Genome_Data_Science_HackBio/blob/main/Stage1_WGS/cftr_project/images/IGV_Missense/IGV_missense_117548682.png?raw=true)
+![Figure 1A](https://github.com/ssokolova01/Genome_Data_Science_HackBio/blob/main/Stage1_WGS/cftr_project/images/Son_Only_Variants/IGV_Son_117500278.png?raw=true)
 
 ***B: 
 
