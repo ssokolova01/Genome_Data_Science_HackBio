@@ -98,12 +98,12 @@ GenotypeGVCFs that assigned final genotypes to both samples together;
 <span class="mark">\[9\]</span>.
 
 ```
-# Combining genotypes.
+# **Combining genotypes.**
 gatk CombineGVCFs -R /tmp/ref/chr7.fa -V cftr_VCF/HG01502.g.vcf.gz -V
 cftr_VCF/HG01500.g.vcf.gz -O cftr_VCF/family.g.vcf.gz -L
 chr7:117400000-117750000
 
-# Joint genotyping.
+# **Joint genotyping.**
 gatk GenotypeGVCFs -R /tmp/ref/chr7.fa -V cftr_VCF/family.g.vcf.gz -O
 cftr_VCF/family.vcf.gz -L chr7:117400000-117750000
 ```
