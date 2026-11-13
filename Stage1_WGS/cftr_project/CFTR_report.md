@@ -271,10 +271,19 @@ missense variants: 117590400G\>C had total population 0.68% and European
 population 0.83% frequency; 117592169C\>T had total population 0.82% and
 European population 1% frequency <span class="mark">\[15,19\]</span>.
 
+***Table 1. Missense variants in CFTR.***
+
+| **Position**  | **Protein**         | **Father (ref,alt)** | **Son (ref,alt)** | **ClinVar <span class="mark">\[14\]</span>** | **gnomAD Total / European <span class="mark">\[15\]</span>** | **CFTR2 <span class="mark">\[23\]</span>** | **Conclusion** |
+|---------------|---------------------|----------------------|-------------------|----------------------------------------------|--------------------------------------------------------------|--------------------------------------------|----------------|
+| 117548682C\>A | –                   | ./. (17,4)           | 0/0 (38,0)        | Conflicting                                  | 0.26% / 1.1%, failed gnomAD QC                               | –                                          | Artefact       |
+| 117559479G\>A | p.Val470Met (M470V) | 0/1 (13,12)          | 0/1 (13,12)       | Benign/likely benign                         | 43.91% / 54.93%                                              | Non CF-causing                             | Benign, shared |
+| 117590400G\>C | p.Gly576Ala         | 0/1 (10,10)          | 0/1 (16,19)       | Conflicting, mostly VUS                      | 0.68% / 0.83%                                                | No interpretation                          | VUS, shared    |
+| 117592169C\>T | p.Arg668Cys         | 0/1 (19,20)          | 0/1 (20,27)       | Conflicting, mostly VUS                      | 0.82% / 1.00%                                                | No interpretation                          | VUS, shared    |
+
+
 ***IGV Review*.** IGV visually confirmed heterozygosity of 3 missense
 variants (117559479G\>A, 117590400G\>C, 117592169C\>T) and artefact
-nature of 117548682C\>A variant (Figures are presented in GitHub
-repository). For all three missense variants about half of reads carried
+nature of 117548682C\>A variant (Figure 1 A-D). For all three missense variants about half of reads carried
 the alternative allele (48–57%) in both son and father. At 117548682,
 the father had only a few alternative reads, and the sporadic A bases in
 the son were in low-quality reads not counted by GATK. For son-only
@@ -285,28 +294,24 @@ insertion in a poly-T homopolymer with low depth (7 reads). Homopolymers
 are prone to sequencing and alignment errors, so this call was
 considered an artefact <span class="mark">\[21\]</span>.
 
-Figure 1. IGV review for four shared missense variants, son-only variants and father-only variants.
+Figure 1 A-D. IGV review: Missense calls (A: 117548682 (artefact), B–D: the three heterozygous variants).
 
-<img src="images/IGV_MIssense/IGV_missense_117548682.png" width="1200">
+A: 117548682 (artefact).
+![Figure 1A](figures/igv_117548682.png)
 
-<img src="images/IGV_MIssense/IGV_missense_117559479.png" width="1200">
+B: heterozygous variant (117559479).
+![Figure 1A](figures/igv_117559479.png)
 
-<img src="images/IGV_MIssense/IGV_missense_117590400.png" width="1200">
+C: heterozygous variant (117590400).
+![Figure 1A](figures/igv_117590400.png)
 
-<img src="images/IGV_MIssense/IGV_missense_117592169.png" width="1200">
+D: heterozygous variant (117592169).
+![Figure 1A](figures/igv_117592169.png)
 
-Figure 2. IGV review for son-only variants.
+Figure 2 A-F. IGV review: Son-only variants (including 117500278C>CT (artefact)).
 
-<img src="images/IGV_MIssense/IGV_missense_117592169.png" width="1200">
-
-***Table 1. Missense variants in CFTR.***
-
-| **Position**  | **Protein**         | **Father (ref,alt)** | **Son (ref,alt)** | **ClinVar <span class="mark">\[14\]</span>** | **gnomAD Total / European <span class="mark">\[15\]</span>** | **CFTR2 <span class="mark">\[23\]</span>** | **Conclusion** |
-|---------------|---------------------|----------------------|-------------------|----------------------------------------------|--------------------------------------------------------------|--------------------------------------------|----------------|
-| 117548682C\>A | –                   | ./. (17,4)           | 0/0 (38,0)        | Conflicting                                  | 0.26% / 1.1%, failed gnomAD QC                               | –                                          | Artefact       |
-| 117559479G\>A | p.Val470Met (M470V) | 0/1 (13,12)          | 0/1 (13,12)       | Benign/likely benign                         | 43.91% / 54.93%                                              | Non CF-causing                             | Benign, shared |
-| 117590400G\>C | p.Gly576Ala         | 0/1 (10,10)          | 0/1 (16,19)       | Conflicting, mostly VUS                      | 0.68% / 0.83%                                                | No interpretation                          | VUS, shared    |
-| 117592169C\>T | p.Arg668Cys         | 0/1 (19,20)          | 0/1 (20,27)       | Conflicting, mostly VUS                      | 0.82% / 1.00%                                                | No interpretation                          | VUS, shared    |
+A: 117500278 (artefact).
+![Figure 1A](figures/igv_117500278.png)
 
 **Interpretation**
 
