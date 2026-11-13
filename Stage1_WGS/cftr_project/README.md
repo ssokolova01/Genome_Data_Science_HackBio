@@ -9,9 +9,13 @@
 ## Data
 
 > **Samples:** 1000 Genomes Project, 30x WGS on GRCh38 (NYGC): son HG01502 (ERR3988891) and father HG01500 (ERR3241916), Iberian (IBS).
+> 
 > **Sample selection:** 1000 Genomes pedigree file and sequence index files.
+> 
 > **Reference genome:** GRCh38 chromosome 7, Broad Institute GATK resource bundle.
+> 
 > **Known indels (BQSR):** chromosome 7 subset of <file name>
+>
 > **Region:** CFTR ±80 kb, chr7:117,400,000–117,750,000.
 
 ----------------------------------------------------------------------------------------------------------------------------
