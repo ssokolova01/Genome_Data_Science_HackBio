@@ -24,7 +24,7 @@ done
 # Create a directory for the trimmed reads output.
 mkdir -p cftr_trimmed
 
-# Trim all four reads of boy and father.
+# Trim R1 and R2 files of son and father.
 SAMPLES=(
         "HG01500"
         "HG01502"
@@ -122,7 +122,7 @@ for SAMPLE in "${SAMPLES[@]}"; do
 done
 
 
-# COMBINE GENOTYPES AND JOINT GENOTYPING
+# COMBINE GVCFs AND JOINT GENOTYPING
 
 # 1. Combine GVCFs of the boy and father into one multi-sample GVCF file.
 
@@ -134,7 +134,7 @@ gatk CombineGVCFs \
     -L chr7:117400000-117750000
 
 # 2. Joint genotyping: genotype boy and father together, so that each variant site has a genotype for both of them.
-# 0/0 for the father means "checked: no variant", ./. means "no data".
+# 0/0 for the father means "checked: no variant", ./. means "no reliable call".
 # Genotyping output allows the inheritance comparison.
 gatk GenotypeGVCFs \
     -R /tmp/ref/chr7.fa \
@@ -142,15 +142,15 @@ gatk GenotypeGVCFs \
     -O cftr_VCF/family.vcf.gz \
     -L chr7:117400000-117750000
 
-# CHECK: Number of variants after variant calling and sample combination. 
+# CHECK: Number of candidate positions (rows without <NON_REF> only) in each GVCF. 
 for f in cftr_VCF/*.g.vcf.gz; do echo $f; zcat $f | grep -v "^#" | awk '$5 != "<NON_REF>"' | wc -l; done
 
-# CHECK: Number of variants after genotyping. 
+# CHECK: Number of variant sites after genotyping.
 zcat cftr_VCF/family.vcf.gz | grep -v "^#" | wc -l
 
 # FILTERING
 
-# 1. Site-level hard filters (GATK standard).
+# 1. Site-level hard filters (subset of GATK-recommended filters).
 # Flag variant positions that do not pass the GATK quality control.
 gatk VariantFiltration \
     -R /tmp/ref/chr7.fa \
@@ -163,6 +163,7 @@ gatk VariantFiltration \
 
 # 2. Genotype-level allele-balance filter (checked for each person separately).
 # A heterozygous call supported by less than 20% of that person's reads is set to missing (./.).
+# Note: AD[:1] uses only the first ALT allele, so 0/2 genotypes at multi-allelic sites are also set to missing (see report, Limitations).
 bcftools filter -S . -e 'GT="het" & FMT/AD[:1]/FMT/DP < 0.2' \
     cftr_VCF/family.filtered.vcf.gz -Oz -o cftr_VCF/family.filtered_ab.vcf.gz
 
@@ -171,7 +172,7 @@ bcftools view -f PASS cftr_VCF/family.filtered_ab.vcf.gz -Oz -o cftr_VCF/family.
 bcftools index -t cftr_VCF/family.pass.vcf.gz
 
 # CHECK: SITE-LEVEL FILTERING
-# Number of variants after filtering.
+# Number of PASS sites.
 zcat cftr_VCF/family.pass.vcf.gz | grep -v "^#" | wc -l
 # Summary for site-level filtering.
 zcat cftr_VCF/family.filtered.vcf.gz | grep -v "^#" | cut -f 7 | sort | uniq -c
@@ -179,9 +180,9 @@ zcat cftr_VCF/family.filtered.vcf.gz | grep -v "^#" | cut -f 7 | sort | uniq -c
 bcftools query -H -i 'FILTER!="PASS"' -f '%POS\t%REF\t%ALT\t%QUAL\t%FILTER\t%INFO/QD\t%INFO/MQ\t[%GT:%AD\t]\n' cftr_VCF/family.filtered.vcf.gz
 
 # CHECK: ALLELE-LEVEL FILTERING
-# Number of allele filtered cells (not rows!).
+# Number of missing genotypes (./.) after the allele filter (includes no-calls from GenotypeGVCFs).
 zcat cftr_VCF/family.filtered_ab.vcf.gz | grep -v "^#" | grep -o "\./\.:" | wc -l
-# Number of variants filtered by allele.
+# Number of positions with at least one missing genotype.
 zcat cftr_VCF/family.filtered_ab.vcf.gz | grep -v "^#" | grep "\./\.:" | cut -f 1,2,4,5,7,10,11 | wc -l
 # Detail for allele filtered variants.
 zcat cftr_VCF/family.filtered_ab.vcf.gz | grep -v "^#" | grep "\./\.:" | cut -f 1,2,4,5,7,10,11
@@ -203,7 +204,7 @@ bcftools query -f '%POS\t%REF\t%ALT\t[%GT\t]\n' cftr_VCF/family.CFTR.vcf.gz > cf
 # Comparison check: sites with a missing genotype in the boy or the father.
 awk -F'\t' '$4=="./." || $5=="./."' cftr_genotypes.tsv
 # Count the inheritance pattern.
-# Missing genotypes are checked first, so a site with no reliable call is never counted as a variant.
+# Missing genotypes are checked first, so a site where either person has no reliable call is not counted as shared or one-sided.
 awk -F'\t' '{
   f=$4; b=$5; gsub(/\|/,"/",f); gsub(/\|/,"/",b);
   if (b=="./." || f=="./.") cat="missing in boy or father";
