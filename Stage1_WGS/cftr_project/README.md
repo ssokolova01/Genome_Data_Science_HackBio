@@ -24,7 +24,9 @@ Genome_Data_Science_HackBio/
          ├── images/
          ├── results/
          ├── 00_setup_references.sh
-         ├── 01_get_data.sh
+         ├── 01_get_data_cftr.sh
          ├── 02_pipeline.sh
-         └── .gitignore   # excludes large files (FASTQ, BAM, CRAM)
+         ├── start_session.sh
+         └── CFTR_report.md
+
 ```
