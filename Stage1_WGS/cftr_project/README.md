@@ -75,3 +75,5 @@ Genome_Data_Science_HackBio/
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
+## Tools
+<list: FastQC, fastp, BWA-MEM, samtools, GATK, bcftools, VEP, IGV, ClinVar, gnomAD, CFTR2>
