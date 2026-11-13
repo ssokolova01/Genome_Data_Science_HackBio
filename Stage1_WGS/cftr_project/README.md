@@ -1,6 +1,7 @@
 # CFTR Clinical Case Study: WGS Variant Analysis (Son vs Father) #
 
 ## Full analysis of genome sequencing data of a family (son and father), from quality control to filtering, using GATK framework for further clinical interpretation of the variants in the CFTR gene. ##
+## Full report: [CFTR_report.md](CFTR_report.md) ##
 
 **Created as part of the HackBio internship Genome Data Science (Fundamentals)**
 
