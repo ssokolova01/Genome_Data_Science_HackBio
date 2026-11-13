@@ -97,6 +97,7 @@ GenotypeGVCFs that assigned final genotypes to both samples together;
 0/0 means confident absence, not missing data
 <span class="mark">\[9\]</span>.
 
+```
 **\# Combining genotypes.**
 
 gatk CombineGVCFs -R /tmp/ref/chr7.fa -V cftr_VCF/HG01502.g.vcf.gz -V
@@ -107,6 +108,7 @@ chr7:117400000-117750000
 
 gatk GenotypeGVCFs -R /tmp/ref/chr7.fa -V cftr_VCF/family.g.vcf.gz -O
 cftr_VCF/family.vcf.gz -L chr7:117400000-117750000
+```
 
 ***Filtering***. For site-level filtering, GATK hard filters (QD \< 2
 (QualByDepth, variant quality divided by read depth), QUAL \< 30
@@ -119,6 +121,7 @@ then only PASS sites were kept and indexed for region queries and
 Integrative Genomic Viewer (IGV). CFTR region restriction using bcftools
 was a final part of the filtering step.
 
+```
 **\# Site-level filtering.**
 
 gatk VariantFiltration -R /tmp/ref/chr7.fa -V cftr_VCF/family.vcf.gz -O
@@ -138,11 +141,13 @@ family.pass.vcf.gz
 
 bcftools view -r chr7:117480025-117668665 family.pass.vcf.gz -Oz -o
 family.CFTR.vcf.gz
+```
 
 ***Comparison***. Variants with genotypes were extracted with \`bcftools
 query\` into .tsv file and classified with \`awk\` into four groups:
 shared / son-only / son has no variant / missing.
 
+```
 **\# Creating a .tsv file for better data access to compare inheritance
 pattern.**
 
@@ -162,17 +167,20 @@ else if (f=="0/0") cat="son only (maternal or de novo)";
 else cat="shared with father (possibly paternal)";
 
 print cat}' cftr_genotypes.tsv \| sort \| uniq -c
+```
 
 ***Annotation***. Ensembl Variant Effect Predictor (VEP) web tool
 (GRCh38, release 2026-07) <span class="mark">\[12\]</span> was used to
 determine the predicted consequence of each variant (e.g. missense,
 intronic).
 
+```
 **\# Genotype data for both samples for 4 annotated missense variants.**
 
 bcftools query -H -r
 chr7:117548682,chr7:117559479,chr7:117590400,chr7:117592169 -f
 '%POS\t%REF\t%ALT\t\[%GT:%AD\t\]\n' cftr_VCF/family.CFTR.vcf.gz
+```
 
 ***Visualization***. missense and son-only calls (recalibrated BAMs and
 final VCF files) were inspected in IGV <span class="mark">\[13\]</span>
@@ -203,6 +211,7 @@ contamination. “Per tile sequence quality” warning in father only showed
 only a few thin, scattered lines which indicate minor random
 fluctuations.
 
+```
 **\# GC content calculation for a reference region.**
 
 samtools faidx /tmp/ref/chr7.fa chr7:117400000-117750000 \| grep -v "\>"
@@ -210,6 +219,7 @@ samtools faidx /tmp/ref/chr7.fa chr7:117400000-117750000 \| grep -v "\>"
 = %.1f%%\n", 100\*gc/n}'
 
 GC = 37.0%
+```
 
 Trimming removed less than 1% of bases, 99.6% (father) and 99.5% (son)
 of reads passed the filters, and Q30 and GC content were essentially
