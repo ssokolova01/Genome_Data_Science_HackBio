@@ -316,7 +316,7 @@ considered an artefact <span class="mark">\[21\]</span>.
 
 ***B: Heterozygous variant 117500580G>A.***
 
-![Figure 2B](https://github.com/ssokolova01/Genome_Data_Science_HackBio/blob/main/Stage1_WGS/cftr_project/images/IGV_Son_Only_Variants/IGV_Son_117500278.png?raw=true)
+![Figure 2B](https://github.com/ssokolova01/Genome_Data_Science_HackBio/blob/main/Stage1_WGS/cftr_project/images/IGV_Son_Only_Variants/IGV_Son_117500580.png?raw=true)
 
 ***C: Heterozygous variant 117533171C>T.***
 
@@ -333,6 +333,10 @@ considered an artefact <span class="mark">\[21\]</span>.
 ***F: Heterozygous variant 117661274G>A.***
 
 ![Figure 2F](https://github.com/ssokolova01/Genome_Data_Science_HackBio/blob/main/Stage1_WGS/cftr_project/images/IGV_Son_Only_Variants/IGV_Son_117661274.png?raw=true)
+
+***Figure 3. Father-only variant: 117538313T>C***
+
+
 
 **Interpretation**
 
