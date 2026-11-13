@@ -98,14 +98,12 @@ GenotypeGVCFs that assigned final genotypes to both samples together;
 <span class="mark">\[9\]</span>.
 
 ```
-**\# Combining genotypes.**
-
+# Combining genotypes.
 gatk CombineGVCFs -R /tmp/ref/chr7.fa -V cftr_VCF/HG01502.g.vcf.gz -V
 cftr_VCF/HG01500.g.vcf.gz -O cftr_VCF/family.g.vcf.gz -L
 chr7:117400000-117750000
 
-**\# Joint genotyping.**
-
+# Joint genotyping.
 gatk GenotypeGVCFs -R /tmp/ref/chr7.fa -V cftr_VCF/family.g.vcf.gz -O
 cftr_VCF/family.vcf.gz -L chr7:117400000-117750000
 ```
@@ -122,23 +120,19 @@ Integrative Genomic Viewer (IGV). CFTR region restriction using bcftools
 was a final part of the filtering step.
 
 ```
-**\# Site-level filtering.**
-
+# Site-level filtering.
 gatk VariantFiltration -R /tmp/ref/chr7.fa -V cftr_VCF/family.vcf.gz -O
 cftr_VCF/family.filtered.vcf.gz --filter-name "QD2" --filter-expression
 "QD \< 2.0" --filter-name "QUAL30" --filter-expression "QUAL \< 30.0"
 --filter-name "FS60" --filter-expression "FS \> 60.0" --filter-name
 "MQ40" --filter-expression "MQ \< 40.0"
 
-**\# Genotype-level filtering, final site filtering and CFTR region
-restriction with bcftools.**
-
+# Genotype-level filtering, final site filtering and CFTR region
+restriction with bcftools.
 bcftools filter -S . -e 'GT="het" & FMT/AD\[:1\]/FMT/DP \< 0.2'
 family.filtered.vcf.gz -Oz -o family.filtered_ab.vcf.gz
-
 bcftools view -f PASS family.filtered_ab.vcf.gz -Oz -o
 family.pass.vcf.gz
-
 bcftools view -r chr7:117480025-117668665 family.pass.vcf.gz -Oz -o
 family.CFTR.vcf.gz
 ```
@@ -148,24 +142,17 @@ query\` into .tsv file and classified with \`awk\` into four groups:
 shared / son-only / son has no variant / missing.
 
 ```
-**\# Creating a .tsv file for better data access to compare inheritance
-pattern.**
-
+# Creating a .tsv file for better data access to compare inheritance
+pattern.
 bcftools query -f '%POS\t%REF\t%ALT\t\[%GT\t\]\n'
 cftr_VCF/family.CFTR.vcf.gz \> cftr_genotypes.tsv
 
-\# **Comparison of son/father genotypes.**
-
+# Comparison of son/father genotypes.
 awk -F'\t' '{f=\$4; b=\$5; gsub(/\\/,"/",f); gsub(/\\/,"/",b);
-
 if (b=="./." \|\| f=="./.") cat="missing in son or father";
-
 else if (b=="0/0") cat="father only";
-
 else if (f=="0/0") cat="son only (maternal or de novo)";
-
 else cat="shared with father (possibly paternal)";
-
 print cat}' cftr_genotypes.tsv \| sort \| uniq -c
 ```
 
@@ -175,8 +162,7 @@ determine the predicted consequence of each variant (e.g. missense,
 intronic).
 
 ```
-**\# Genotype data for both samples for 4 annotated missense variants.**
-
+# Genotype data for both samples for 4 annotated missense variants.
 bcftools query -H -r
 chr7:117548682,chr7:117559479,chr7:117590400,chr7:117592169 -f
 '%POS\t%REF\t%ALT\t\[%GT:%AD\t\]\n' cftr_VCF/family.CFTR.vcf.gz
@@ -212,8 +198,7 @@ only a few thin, scattered lines which indicate minor random
 fluctuations.
 
 ```
-**\# GC content calculation for a reference region.**
-
+# GC content calculation for a reference region.
 samtools faidx /tmp/ref/chr7.fa chr7:117400000-117750000 \| grep -v "\>"
 \| tr -d '\n' \| awk '{n=length(\$0); gc=gsub(/\[GCgc\]/,""); printf "GC
 = %.1f%%\n", 100\*gc/n}'
