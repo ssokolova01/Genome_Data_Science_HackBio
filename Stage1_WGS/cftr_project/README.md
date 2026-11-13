@@ -1,6 +1,6 @@
 # CFTR Clinical Case Study: WGS Variant Analysis (Son vs Father) #
 
-## Germline variant analysis of whole-genome sequencing data from a son and his father (1000 Genomes), from quality control to clinical interpretation of variants in the CFTR gene (the gene responsible for cystic fibrosis (CF)), using a GATK-based pipeline. 
+## Germline variant analysis of whole-genome sequencing data from a son and his father (1000 Genomes), from quality control to clinical interpretation of variants in the *CFTR* gene, responsible for cystic fibrosis (CF), using a GATK-based pipeline. 
 ### No CF-causing variant was found. The son carries one benign variant and two variants of uncertain significance, all shared with his father. Full report: [CFTR_report.md](CFTR_report.md)
 
 **Created as part of the HackBio internship Genome Data Science (Fundamentals)**
@@ -21,16 +21,20 @@
 
 ## Task
 
-Execute WGS data analysis to explore pathogenic variants in the CFTR gene of the child with the following interpretation. 
+Analyse the WGS data to determine whether the child carries pathogenic variants in the *CFTR* gene.
+
+Provided clinical data:
+
+A 6-year-old boy with chronic respiratory symptoms, poor weight gain and a borderline sweat chloride test (45 mmol/L) is suspected of having cystic fibrosis. WGS data are available for the boy and his father; the mother’s data are not available.
 
 Whole-genome data analysis includes:
 
-* Quality control and alignment of raw reads to the human reference genome.
-* Variant calling in the son and the father.
-* Genome restriction to the CFTR region.
-* Comparison of the inheritance pattern of variants between the son and the father.
-* Annotate and interpret variants to identify possible pathogenic mutations using variant databases.
-* Conclude on whether the son is affected with CF based on genotype. Comment on the variant origin (inherited or de novo).
+* Perform quality control and align raw reads to the human reference genome.
+* Call variants in the son and the father.
+* Focus the analysis on the CFTR locus (7q31.2).
+* Compare the son’s and father’s variants to determine inheritance patterns.
+* Annotate and interpret variants to identify known pathogenic *CFTR* mutations (e.g., F508del, G542X, W1282X) using variant databases such as ClinVar.
+* Conclude whether the son is affected with CF, and whether the variants are inherited or possibly de novo.
 
 ## Repository structure
 
@@ -51,3 +55,6 @@ Genome_Data_Science_HackBio/
          └── CFTR_report.md
 
 ```
+
+## Technical details
+
