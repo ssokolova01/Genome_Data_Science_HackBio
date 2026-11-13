@@ -283,13 +283,13 @@ European population 1% frequency <span class="mark">\[15,19\]</span>.
 
 ***IGV Review*.** IGV visually confirmed heterozygosity of 3 missense
 variants (117559479G\>A, 117590400G\>C, 117592169C\>T) and artefact
-nature of 117548682C\>A variant (Figure 1 A-D). For all three missense variants about half of reads carried
+nature of 117548682C\>A variant (Figure 1A-D). For all three missense variants about half of reads carried
 the alternative allele (48–57%) in both son and father. At 117548682,
 the father had only a few alternative reads, and the sporadic A bases in
 the son were in low-quality reads not counted by GATK. For son-only
 variants, IGV confirmed variants 117500580G\>A, 117533171C\>T,
 117599550G\>C, 117655321G\>A, 117661274G\>A as heterozygous (34–70%
-alternative reads in the son, none in the father). 117500278C\>CT is an
+alternative reads in the son, none in the father) (Figure 2A-F). 117500278C\>CT is an
 insertion in a poly-T homopolymer with low depth (7 reads). Homopolymers
 are prone to sequencing and alignment errors, so this call was
 considered an artefact <span class="mark">\[21\]</span>.
