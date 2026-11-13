@@ -296,19 +296,17 @@ considered an artefact <span class="mark">\[21\]</span>.
 
 Figure 1 A-D. IGV review: Missense calls (A: 117548682 (artefact), B–D: the three heterozygous variants).
 
+A: 117548682 (artefact).
 ![Figure 1A](https://github.com/ssokolova01/Genome_Data_Science_HackBio/blob/main/Stage1_WGS/cftr_project/images/IGV_Missense/IGV_missense_117548682.png?raw=true)
 
-A: 117548682 (artefact).
-![Figure 1A](images/IGV_Missense/IGV_Missense_117548682.png)
-
 B: heterozygous variant (117559479).
-![Figure 1A](figures/igv_117559479.png)
+![Figure 1A](https://github.com/ssokolova01/Genome_Data_Science_HackBio/blob/main/Stage1_WGS/cftr_project/images/IGV_Missense/IGV_missense_117559479.png?raw=true)
 
 C: heterozygous variant (117590400).
-![Figure 1A](figures/igv_117590400.png)
+![Figure 1A](https://github.com/ssokolova01/Genome_Data_Science_HackBio/blob/main/Stage1_WGS/cftr_project/images/IGV_Missense/IGV_missense_117590400.png?raw=true)
 
 D: heterozygous variant (117592169).
-![Figure 1A](figures/igv_117592169.png)
+![Figure 1A](https://github.com/ssokolova01/Genome_Data_Science_HackBio/blob/main/Stage1_WGS/cftr_project/images/IGV_Missense/IGV_missense_117592169.png?raw=true)
 
 Figure 2 A-F. IGV review: Son-only variants (including 117500278C>CT (artefact)).
 
