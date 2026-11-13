@@ -285,6 +285,10 @@ insertion in a poly-T homopolymer with low depth (7 reads). Homopolymers
 are prone to sequencing and alignment errors, so this call was
 considered an artefact <span class="mark">\[21\]</span>.
 
+Figure. IGV review for four shared missense variants, son-only variants and father-only variants.
+
+<img src="images/IGV_Calls_GATK_training_NA12878.png" width="1200">
+
 ***Table 1. Missense variants in CFTR.***
 
 | **Position**  | **Protein**         | **Father (ref,alt)** | **Son (ref,alt)** | **ClinVar <span class="mark">\[14\]</span>** | **gnomAD Total / European <span class="mark">\[15\]</span>** | **CFTR2 <span class="mark">\[23\]</span>** | **Conclusion** |
