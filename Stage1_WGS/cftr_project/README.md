@@ -2,15 +2,23 @@
 
 ## Germline variant analysis of whole-genome sequencing data from a son and his father (1000 Genomes), from quality control to clinical interpretation of variants in the CFTR gene, using GATK-based pipeline. 
 ## No CF-causing variant was found. The son carries one benign variant and two variants of uncertain significance, all shared with his father.
-## Full report: [CFTR_report.md](CFTR_report.md) ##
+## Full report: [CFTR_report.md](CFTR_report.md)
 
 **Created as part of the HackBio internship Genome Data Science (Fundamentals)**
 
-> **Data: 1000 Genomes Project ()
+## Data
 
-> **Reference files:
+> **Samples:** 1000 Genomes Project, 30x WGS on GRCh38 (NYGC): son HG01502 (ERR3988891) and father HG01500 (ERR3241916), Iberian (IBS).
+> **Sample selection:** 1000 Genomes pedigree file and sequence index files.
+> **Reference genome:** GRCh38 chromosome 7, Broad Institute GATK resource bundle.
+> **Known indels (BQSR):** chromosome 7 subset of <file name>
 
-> **Sample files: 
+## Data
+
+
+
+- **Known indels (BQSR):** chromosome 7 subset of <file name>
+- **Region:** CFTR ±80 kb, chr7:117,400,000–117,750,000
 
 ### Files required for analysis:
 
