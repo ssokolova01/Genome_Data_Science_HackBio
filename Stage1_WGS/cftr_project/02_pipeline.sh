@@ -7,7 +7,7 @@
 # Create a directory for output from quality control (QC).
 mkdir -p cftr_qc
 
-# QC of the raw reads of boy and father.
+# QC of the raw reads of son and father.
 SAMPLES=(
         "HG01500"
         "HG01502"
@@ -80,7 +80,7 @@ SAMPLES=(
         "HG01502"
 )
 
-# Loop for sorting, marking duplicates and indexing for boy and father reads.
+# Loop for sorting, marking duplicates and indexing for son and father reads.
 for SAMPLE in "${SAMPLES[@]}"; do
                 gatk SortSam -I cftr_mapped/${SAMPLE}_aligned.bam -O cftr_sorted/${SAMPLE}_sorted.bam -SORT_ORDER coordinate
                 gatk MarkDuplicates -I cftr_sorted/${SAMPLE}_sorted.bam -O cftr_marked/${SAMPLE}_marked.bam -M cftr_marked/${SAMPLE}_metrics.txt
@@ -93,7 +93,7 @@ done
 # Create a directory for Base Quality Score Recalibration output.
 mkdir -p cftr_BQSR
 
-# Base quality score recalibration for boy and father reads.
+# Base quality score recalibration for son and father reads.
 SAMPLES=(
         "HG01500"
         "HG01502"
@@ -107,10 +107,10 @@ done
 
 # VARIANT CALLING
 
-# Create a directory for variant calling output for boy and father samples.
+# Create a directory for variant calling output for son and father samples.
 mkdir -p cftr_VCF
 
-# Call variants for boy and father samples.
+# Call variants for son and father samples.
 SAMPLES=(
         "HG01500"
         "HG01502"
@@ -124,7 +124,7 @@ done
 
 # COMBINE GVCFs AND JOINT GENOTYPING
 
-# 1. Combine GVCFs of the boy and father into one multi-sample GVCF file.
+# 1. Combine GVCFs of the son and father into one multi-sample GVCF file.
 
 gatk CombineGVCFs \
     -R /tmp/ref/chr7.fa \
@@ -133,7 +133,7 @@ gatk CombineGVCFs \
     -O cftr_VCF/family.g.vcf.gz \
     -L chr7:117400000-117750000
 
-# 2. Joint genotyping: genotype boy and father together, so that each variant site has a genotype for both of them.
+# 2. Joint genotyping: genotype son and father together, so that each variant site has a genotype for both of them.
 # 0/0 for the father means "checked: no variant", ./. means "no reliable call".
 # Genotyping output allows the inheritance comparison.
 gatk GenotypeGVCFs \
@@ -199,9 +199,9 @@ zcat cftr_VCF/family.CFTR.vcf.gz | grep -v "^#" | wc -l
 bcftools query -f '%POS\t%REF\t%ALT\t[%GT\t]\n' cftr_VCF/family.CFTR.vcf.gz > cftr_genotypes.tsv
 
 # GENOTYPE COMPARISON AND INHERITED PATTERNS
-# Columns of cftr_genotypes.tsv: $1 POS, $2 REF, $3 ALT, $4 father (HG01500), $5 boy (HG01502).
+# Columns of cftr_genotypes.tsv: $1 POS, $2 REF, $3 ALT, $4 father (HG01500), $5 son (HG01502).
 # gsub turns phased genotypes (0|1) into unphased (0/1), so both are compared the same way.
-# Comparison check: sites with a missing genotype in the boy or the father.
+# Comparison check: sites with a missing genotype in the son or the father.
 awk -F'\t' '$4=="./." || $5=="./."' cftr_genotypes.tsv
 # Count the inheritance pattern.
 # Missing genotypes are checked first, so a site where either person has no reliable call is not counted as shared or one-sided.
@@ -209,11 +209,11 @@ awk -F'\t' '{
   f=$4; b=$5; gsub(/\|/,"/",f); gsub(/\|/,"/",b);
   if (b=="./." || f=="./.") cat="missing in boy or father";
   else if (b=="0/0") cat="father only";
-  else if (f=="0/0") cat="boy only (maternal or de novo)";
+  else if (f=="0/0") cat="son only (maternal or de novo)";
   else cat="shared with father (possibly paternal)";
   print cat
 }' cftr_genotypes.tsv | sort | uniq -c
-# List of boy-only sites
+# List of son-only sites
 awk -F'\t' '{f=$4; b=$5; gsub(/\|/,"/",f); gsub(/\|/,"/",b); if (b!="0/0" && b!="./." && f=="0/0") print}' cftr_genotypes.tsv
 # List of father-only sites
 awk -F'\t' '{f=$4; b=$5; gsub(/\|/,"/",f); gsub(/\|/,"/",b); if (f!="0/0" && f!="./." && b=="0/0") print}' cftr_genotypes.tsv
