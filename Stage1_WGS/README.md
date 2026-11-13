@@ -7,7 +7,7 @@ Projects from the HackBio internship *Genome Data Science: Fundamentals*, Stage 
 | Project | Description |
 |---|---|
 | [GATK_training](GATK_training/) | Training run of the GATK germline pipeline on the reference sample NA12878: <one line on what you did> |
-| [cftr_project](cftr_project/) | Clinical case study: son–father WGS analysis of the *CFTR* gene for suspected cystic fibrosis, from QC to clinical interpretation |
+| [cftr_project](cftr_project/) | Clinical case study: son–father WGS analysis of the *CFTR* gene for suspected cystic fibrosis, from QC to clinical interpretation. |
 
 ## Shared setup
 Both projects use GRCh38 chromosome 7 from the Broad Institute GATK resource bundle and the same Cloud Shell environment (`start_session.sh`).
