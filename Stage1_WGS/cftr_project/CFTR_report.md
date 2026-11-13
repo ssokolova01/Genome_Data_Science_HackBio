@@ -336,7 +336,7 @@ considered an artefact <span class="mark">\[21\]</span>.
 
 ***Figure 3. Father-only variant: 117538313T>C***
 
-
+![Figure 3](https://github.com/ssokolova01/Genome_Data_Science_HackBio/blob/main/Stage1_WGS/cftr_project/images/IGV_Father_Only_Variants/IGV_Father_117538313.png?raw=true)
 
 **Interpretation**
 
