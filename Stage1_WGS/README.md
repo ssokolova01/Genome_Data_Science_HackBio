@@ -6,7 +6,7 @@ Projects from the HackBio internship *Genome Data Science: Fundamentals*, Stage 
 
 | Project | Description |
 |---|---|
-| [GATK_training](GATK_training/) | Training run of the GATK germline pipeline on the reference sample NA12878: <one line on what you did> |
+| [GATK_training](GATK_training/) | Training run of the GATK germline pipeline on the reference sample NA12878: reads from the CFTR region of the 1000 Genomes high-coverage data, processed from QC and alignment to variant calling, to test the pipeline before the clinical case study. |
 | [cftr_project](cftr_project/) | Clinical case study: son–father WGS analysis of the *CFTR* gene for suspected cystic fibrosis, from QC to clinical interpretation. |
 
 ## Shared setup
