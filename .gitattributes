@@ -1,2 +1,4 @@
-*.html linguist-detectable=false
-*.json linguist-detectable=false
+*.sh detectable=true
+*.html linguist-documentation=false
+*.json linguist-documentation=false
+*.ipynb linguist-language=Bash
