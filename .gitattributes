@@ -1,4 +1,1 @@
-*.sh detectable=true
-*.html linguist-documentation=false
-*.json linguist-documentation=false
-*.sh linguist-language=Bash
+*.html linguist-detectable=false
