@@ -1,3 +1,2 @@
 *.html linguist-detectable=false
 *.json linguist-detectable=false
-*.shell linguist-detectable=false
